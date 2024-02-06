@@ -13,6 +13,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  eventId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Event",
+  },
+  departmentId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Department",
+  },
   role: {
     type: String,
     enum: ["masterAdmin", "juniorAdmin", "executiveAdmin", "user"],

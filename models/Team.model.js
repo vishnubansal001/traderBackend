@@ -9,6 +9,10 @@ const teamSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  banned: {
+    type: Boolean,
+    default: false,
+  },
   teamMembers: [
     {
       type: mongoose.Schema.Types.ObjectId,
