@@ -6,6 +6,10 @@ const transactionSchema = new mongoose.Schema({
     required: true,
   },
   sender: {
+    type: String,
+    required: true,
+  },
+  teamId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Team",
     required: true,
@@ -13,7 +17,7 @@ const transactionSchema = new mongoose.Schema({
   department: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Department",
-    required: true,
+    // required: true,
   },
   eventId: {
     type: mongoose.Schema.Types.ObjectId,

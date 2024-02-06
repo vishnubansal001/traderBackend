@@ -9,6 +9,14 @@ const teamSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  eventId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Event",
+  },
+  amount: {
+    type: Number,
+    default: 0,
+  },
   banned: {
     type: Boolean,
     default: false,
@@ -23,6 +31,12 @@ const teamSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Transaction",
+    },
+  ],
+  requests: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Request",
     },
   ],
   createdAt: {
