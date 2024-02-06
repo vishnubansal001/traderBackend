@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
+  teamId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Team",
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
