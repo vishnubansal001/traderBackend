@@ -1,12 +1,10 @@
-const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
 const User = require("../models/User.model");
 const Event = require("../models/Event.model");
 const Team = require("../models/Team.model");
 const cloudinary = require("../cloud/cloudinary");
 const csv = require("csvtojson");
 const Department = require("../models/Department.model");
-const { generateRandomPassword } = require("../utils/helper");
+const { generateRandomPassword, deleteFile } = require("../utils/helper");
 
 exports.createEvent = async (req, res) => {
   try {
@@ -274,7 +272,7 @@ exports.getTeams = async (req, res) => {
     if (!event) {
       return res.status(400).json({ message: "Invalid event" });
     }
-    const teams = await Team.find({ eventId: id });
+    const teams = await Team.find({ eventId: id }).populate("teamLead");
     res.status(200).json({ teams });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -288,7 +286,7 @@ exports.getTeam = async (req, res) => {
     if (!event) {
       return res.status(400).json({ message: "Invalid event" });
     }
-    const team = await Team.findById(teamId);
+    const team = await Team.findById(teamId).populate("teamLead");
     if (!team) {
       return res.status(400).json({ message: "Invalid team" });
     }
@@ -315,7 +313,7 @@ exports.deleteTeam = async (req, res) => {
     if (team.eventId.toString() !== id) {
       return res.status(400).json({ message: "Invalid team" });
     }
-    await team.remove();
+    await Team.findByIdAndDelete(teamId);
     res.status(200).json({ message: "Team deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -378,17 +376,23 @@ exports.addTeams = async (req, res) => {
       return res.status(400).json({ message: "File is required" });
     }
     const date = file.filename.split("-")[1].split(".")[0];
-    console.log(date,file);
+    // console.log(date,file);
     const teams = await csv().fromFile(file.path);
     const result = [];
     for (let i = 0; i < teams.length; i++) {
       if (
         teams[i].email === "" ||
         teams[i].name === "" ||
-        teams[i].amount == "" || 
+        teams[i].amount == "" ||
         teams[i].leadName === ""
       ) {
         break;
+      }
+      const userExists = await User.findOne({ email: teams[i].email });
+      if (userExists && userExists.eventId.toString() === id) {
+        continue;
+      } else if (userExists && userExists.eventId.toString() !== id) {
+        await User.findByIdAndDelete(userExists._id);
       }
       const pass = generateRandomPassword(12);
       const user = await User.create({
@@ -409,6 +413,7 @@ exports.addTeams = async (req, res) => {
       await user.save();
       result.push({ user, team });
     }
+    deleteFile(file.path);
     res.status(201).json({ message: "Teams added", teams: result });
   } catch (error) {
     res.status(500).json({ message: error.message });

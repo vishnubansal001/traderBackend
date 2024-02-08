@@ -42,11 +42,11 @@ eventRouter.put(
   checkMasterAdmin,
   updateDepartment
 ); // done
-eventRouter.post("/:id/team",uploadCsv, checkMasterAdmin, addTeams);
-eventRouter.get("/:id/teams", checkMasterAdmin, getTeams);
-eventRouter.get("/:id/team/:teamId", checkMasterAdmin, getTeam);
-eventRouter.delete("/:id/team/:teamId", checkMasterAdmin, deleteTeam);
-eventRouter.put("/:id/team/:teamId/ban", checkMasterAdmin, banTeam);
-eventRouter.put("/:id/team/:teamId/unban", checkMasterAdmin, unbanTeam);
+eventRouter.post("/:id/team",uploadCsv, checkMasterAdmin, addTeams); // done
+eventRouter.post("/:id/teams", checkMasterAdmin, getTeams); // done
+eventRouter.post("/:id/team/:teamId", checkMasterAdmin, getTeam); // done
+eventRouter.delete("/:id/team/:teamId", checkMasterAdmin, deleteTeam); // done
+eventRouter.put("/:id/team/:teamId/ban", checkMasterAdmin, banTeam); // done
+eventRouter.put("/:id/team/:teamId/unban", checkMasterAdmin, unbanTeam); // done
 
 module.exports = eventRouter;

@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 function generateRandomPassword(length) {
   const charset =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -9,6 +11,17 @@ function generateRandomPassword(length) {
   return password;
 }
 
+function deleteFile(filePath) {
+  fs.unlinkSync(filePath, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("file deleted");
+    }
+  });
+}
+
 module.exports = {
   generateRandomPassword,
+  deleteFile,
 };
