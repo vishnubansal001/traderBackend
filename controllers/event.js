@@ -4,7 +4,9 @@ const User = require("../models/User.model");
 const Event = require("../models/Event.model");
 const Team = require("../models/Team.model");
 const cloudinary = require("../cloud/cloudinary");
+const csv = require("csvtojson");
 const Department = require("../models/Department.model");
+const { generateRandomPassword } = require("../utils/helper");
 
 exports.createEvent = async (req, res) => {
   try {
@@ -104,7 +106,7 @@ exports.updateEvent = async (req, res) => {
         event.teamSize = teamSize;
       }
       await event.save();
-      return res.status(200).json({ message:"Event Updated" });
+      return res.status(200).json({ message: "Event Updated" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -118,7 +120,7 @@ exports.deleteEvent = async (req, res) => {
     if (!event) {
       return res.status(400).json({ message: "Invalid event" });
     }
-    await event.remove();
+    await Event.findByIdAndDelete(id);
     res.status(200).json({ message: "Event deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -160,6 +162,8 @@ exports.addDepartment = async (req, res) => {
     await department.save();
     user.departmentId = department._id;
     await user.save();
+    event.departments.push(department._id);
+    await event.save();
     res.status(201).json({ event });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -188,7 +192,7 @@ exports.removeDepartment = async (req, res) => {
     }
     user.departmentId = null;
     await user.save();
-    await department.remove();
+    await Department.findByIdAndDelete(departmentId);
     res.status(200).json({ message: "Department removed" });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -362,7 +366,51 @@ exports.unbanTeam = async (req, res) => {
   }
 };
 
-// exports.addTeams = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const event = await Event.findById(id);
+exports.addTeams = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const event = await Event.findById(id);
+    if (!event) {
+      return res.status(400).json({ message: "Invalid event" });
+    }
+    const file = req.file;
+    if (!file) {
+      return res.status(400).json({ message: "File is required" });
+    }
+    const date = file.filename.split("-")[1].split(".")[0];
+    console.log(date,file);
+    const teams = await csv().fromFile(file.path);
+    const result = [];
+    for (let i = 0; i < teams.length; i++) {
+      if (
+        teams[i].email === "" ||
+        teams[i].name === "" ||
+        teams[i].amount == "" || 
+        teams[i].leadName === ""
+      ) {
+        break;
+      }
+      const pass = generateRandomPassword(12);
+      const user = await User.create({
+        email: teams[i].email,
+        name: teams[i].leadName,
+        password: pass,
+        isTeamLead: true,
+        eventId: id,
+      });
+      const team = await Team.create({
+        teamLead: user._id,
+        eventId: id,
+        name: teams[i].name,
+        amount: +teams[i].amount,
+      });
+      await team.save();
+      user.teamId = team._id;
+      await user.save();
+      result.push({ user, team });
+    }
+    res.status(201).json({ message: "Teams added", teams: result });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

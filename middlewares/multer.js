@@ -34,13 +34,11 @@ function checkFileType(file, cb) {
 
 exports.uploadCsv = upload;
 
-const memoryStorage = multer.memoryStorage();
-
 const imageFileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image/')) {
-    cb(null, true);  // Accept the file
+    cb(null, true);
   } else {
-    cb(new Error('Unsupported file type'), false);  // Reject the file
+    cb(new Error('Unsupported file type'), false);
   }
 };
 

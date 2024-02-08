@@ -16,10 +16,12 @@ const userSchema = new mongoose.Schema({
   eventId:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Event",
+    default: null,
   },
   departmentId:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Department",
+    default: null,
   },
   role: {
     type: String,
@@ -39,6 +41,7 @@ const userSchema = new mongoose.Schema({
   teamId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Team",
+    default: null,
   },
   createdAt: {
     type: Date,

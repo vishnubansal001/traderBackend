@@ -17,7 +17,7 @@ const {
   banTeam,
   unbanTeam,
 } = require("../controllers/event");
-const { uploadImage } = require("../middlewares/multer");
+const { uploadImage, uploadCsv } = require("../middlewares/multer");
 const eventRouter = express.Router();
 
 eventRouter.post(
@@ -29,20 +29,20 @@ eventRouter.post(
 eventRouter.get("/", getEvents); // done
 eventRouter.get("/:id", getEvent); // done
 eventRouter.put("/:id", checkMasterAdmin, updateEvent); // done
-eventRouter.delete("/:id", checkMasterAdmin, deleteEvent); 
-eventRouter.post("/:id/department", checkMasterAdmin, addDepartment);
+eventRouter.delete("/:id", checkMasterAdmin, deleteEvent); // done
+eventRouter.post("/:id/department", checkMasterAdmin, addDepartment); // done
 eventRouter.delete(
   "/:id/department/:departmentId",
   checkMasterAdmin,
   removeDepartment
-);
-eventRouter.get("/:id/departments", getDepartments);
+); // done
+eventRouter.get("/:id/departments", getDepartments); // done
 eventRouter.put(
   "/:id/department/:departmentId",
   checkMasterAdmin,
   updateDepartment
-);
-// eventRouter.post("/:id/team", checkMasterAdmin, addTeams);
+); // done
+eventRouter.post("/:id/team",uploadCsv, checkMasterAdmin, addTeams);
 eventRouter.get("/:id/teams", checkMasterAdmin, getTeams);
 eventRouter.get("/:id/team/:teamId", checkMasterAdmin, getTeam);
 eventRouter.delete("/:id/team/:teamId", checkMasterAdmin, deleteTeam);
