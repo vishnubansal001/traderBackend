@@ -4,11 +4,12 @@ const Event = require("../models/Event.model");
 const Department = require("../models/Department.model");
 const Team = require("../models/Team.model");
 const Transaction = require("../models/Transaction.model");
+const { generateTransactionId } = require("../utils/helper");
 
 exports.createTransaction = async (req, res) => {
   try {
     const { teamId, id } = req.params;
-    const { amount, jwt } = req.body;
+    const { amount, token } = req.body;
     if (!teamId || !amount) {
       return res.status(400).json({ message: "Team ID, amount are required" });
     }
@@ -31,7 +32,7 @@ exports.createTransaction = async (req, res) => {
     team.amount += amount;
     await team.save();
     let sender;
-    const decoded = jwt.verify(jwt, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
     if (user.role === "masterAdmin" || user.role === "juniorAdmin") {
       sender = user.role;
@@ -51,6 +52,8 @@ exports.createTransaction = async (req, res) => {
       amount,
       teamId,
       sender,
+      eventId: id,
+      transactionId: generateTransactionId(),
     });
     await transaction.save();
     team.history.push(transaction._id);
@@ -139,7 +142,9 @@ exports.deleteTransaction = async (req, res) => {
         .status(400)
         .json({ message: "This transaction does not belong to this team" });
     }
-    await transaction.delete();
+    await Transaction.findByIdAndDelete(transactionId);
+    team.history.filter((id) => id != transactionId);
+    await team.save();
     res.status(200).json({ message: "Transaction deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -160,7 +165,7 @@ exports.getTeamTransactions = async (req, res) => {
     if (!team) {
       return res.status(400).json({ message: "Invalid team ID" });
     }
-    if (team.eventId.toString() !== id) {
+    if (team.eventId.toString() != id) {
       return res
         .status(400)
         .json({ message: "This team does not belong to this event" });
@@ -175,6 +180,7 @@ exports.getTeamTransactions = async (req, res) => {
 exports.deleteTeamTransactions = async (req, res) => {
   try {
     const { id, teamId } = req.params;
+    console.log(id, teamId);
     if (!id) {
       return res.status(400).json({ message: "Team ID is required" });
     }
@@ -191,9 +197,14 @@ exports.deleteTeamTransactions = async (req, res) => {
         .status(400)
         .json({ message: "This team does not belong to this event" });
     }
+    if (!team.history.length) {
+      return res.status(400).json({ message: "No transactions to delete" });
+    }
     await Transaction.deleteMany({ teamId });
+    await team.history.pull();
+    await team.save();
     res.status(200).json({ message: "Transactions deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error });
   }
 };

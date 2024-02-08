@@ -10,23 +10,8 @@ const {
 const checkMasterAdmin = require("../middlewares/admin");
 const transactionRouter = express.Router();
 
-transactionRouter.post("/:id/:teamId", checkMasterAdmin, createTransaction);
-transactionRouter.get("/:id", checkMasterAdmin, getTransactions);
-transactionRouter.get("/:id/:teamId/:transactionId", checkMasterAdmin, getTransaction);
-transactionRouter.delete(
-  "/:id/:teamId/:transactionId",
-  checkMasterAdmin,
-  deleteTransaction
-);
-transactionRouter.get(
-  "/:id/transactions/:teamId",
-  checkMasterAdmin,
-  getTeamTransactions
-);
-transactionRouter.delete(
-  "/:id/transactions/:teamId",
-  checkMasterAdmin,
-  deleteTeamTransactions
-);
+transactionRouter.post("/:id/:teamId", checkMasterAdmin, createTransaction); // done
+transactionRouter.post("/:id", checkMasterAdmin, getTransactions); // done
+transactionRouter.post("/:id/:teamId/:transactionId", checkMasterAdmin, getTransaction); // done
 
 module.exports = transactionRouter;

@@ -130,15 +130,6 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-// exports.makeTeams = async (req, res) => {
-//   try {
-//     const resume = req.file;
-//     const date = resume.filename.split("-")[1].split(".")[0];
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
 exports.eventLogin = async (req, res) => {
   try {
     const id = req.params.id;
@@ -156,7 +147,7 @@ exports.eventLogin = async (req, res) => {
     if (!user) {
       return res.status(400).json({ message: "Invalid email" });
     }
-    if (user.password !== password) {
+    if (user.password != password) {
       return res.status(400).json({ message: "Invalid password" });
     }
     if (user.eventId.toString() !== id) {

@@ -21,7 +21,22 @@ function deleteFile(filePath) {
   });
 }
 
+function generateTransactionId() {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_";
+  const idLength = 16;
+  let transactionId = "";
+
+  for (let i = 0; i < idLength; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    transactionId += characters[randomIndex];
+  }
+
+  return transactionId;
+}
+
 module.exports = {
   generateRandomPassword,
   deleteFile,
+  generateTransactionId,
 };

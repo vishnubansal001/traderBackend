@@ -7,8 +7,8 @@ const Department = require("../models/Department.model");
 
 exports.createRequest = async (req, res) => {
   try {
-    const { subject, department, amount, reason, jwt } = req.body;
-    const decoded = jwt.verify(jwt, process.env.JWT_SECRET);
+    const { subject, department, amount, reason, token } = req.body;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
     if (!user) return res.status(401).json({ message: "Unauthorized" });
     if (!user.isTeamLead) {
@@ -40,8 +40,8 @@ exports.createRequest = async (req, res) => {
 
 exports.approveRequest = async (req, res) => {
   try {
-    const { jwt } = req.body;
-    const decoded = jwt.verify(jwt, process.env.JWT_SECRET);
+    const { token } = req.body;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
     if (!user) return res.status(401).json({ message: "Unauthorized" });
     if (!user.isTeamLead) {

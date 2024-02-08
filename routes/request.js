@@ -11,12 +11,12 @@ const {
   showRequests,
 } = require("../controllers/request");
 
-requestRouter.post("/", createRequest);
-requestRouter.post("/:id/approve/:requestId", approveRequest);
-requestRouter.post("/:id/decline/:requestId", declineRequest);
-requestRouter.get("/:id/:requestId", showRequest);
-requestRouter.get("/:id/department/:departmentId", showRequestsDep);
-requestRouter.get("/:id/team/:teamId", showRequestsTeam);
-requestRouter.get("/:id", showRequests);
+requestRouter.post("/", createRequest); // done
+requestRouter.post("/:id/approve/:requestId", approveRequest); // done
+requestRouter.post("/:id/decline/:requestId", declineRequest); // done
+requestRouter.get("/:id/:requestId", showRequest); // done
+requestRouter.get("/:id/department/:departmentId", showRequestsDep); // done
+requestRouter.get("/:id/team/:teamId", showRequestsTeam); // done
+requestRouter.get("/:id", showRequests); // done
 
 module.exports = requestRouter;

@@ -9,11 +9,9 @@ const {
 } = require("../controllers/user");
 const authRouter = express.Router();
 
-authRouter.post("/login", login);
-authRouter.post("/register", register);
-authRouter.post("/forgot-password", forgotPassword);
-authRouter.post("/reset-password/:token", resetPassword);
-authRouter.post("/:id/login", eventLogin);
-authRouter.post("/:id/add-user", addUser);
+authRouter.post("/login", login); // done
+authRouter.post("/register", register); // done
+authRouter.post("/:id/login", eventLogin); // done
+authRouter.post("/:id/add-user", addUser); // done
 
 module.exports = authRouter;
