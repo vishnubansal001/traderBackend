@@ -10,8 +10,17 @@ const {
   showRequestsTeam,
   showRequests,
 } = require("../controllers/request");
+const {
+  validateRequest,
+  validateFormInputMiddleware,
+} = require("../middlewares/validator");
 
-requestRouter.post("/", createRequest); // done
+requestRouter.post(
+  "/",
+  validateRequest,
+  validateFormInputMiddleware,
+  createRequest
+); // done
 requestRouter.post("/:id/approve/:requestId", approveRequest); // done
 requestRouter.post("/:id/decline/:requestId", declineRequest); // done
 requestRouter.get("/:id/:requestId", showRequest); // done
