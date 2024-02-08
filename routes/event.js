@@ -25,11 +25,11 @@ eventRouter.post(
   uploadImage.single("poster"),
   checkMasterAdmin,
   createEvent
-);
-eventRouter.get("/", getEvents);
-eventRouter.get("/:id", getEvent);
-eventRouter.put("/:id", checkMasterAdmin, updateEvent);
-eventRouter.delete("/:id", checkMasterAdmin, deleteEvent);
+); // done
+eventRouter.get("/", getEvents); // done
+eventRouter.get("/:id", getEvent); // done
+eventRouter.put("/:id", checkMasterAdmin, updateEvent); // done
+eventRouter.delete("/:id", checkMasterAdmin, deleteEvent); 
 eventRouter.post("/:id/department", checkMasterAdmin, addDepartment);
 eventRouter.delete(
   "/:id/department/:departmentId",
@@ -42,7 +42,7 @@ eventRouter.put(
   checkMasterAdmin,
   updateDepartment
 );
-eventRouter.post("/:id/team", checkMasterAdmin, addTeams);
+// eventRouter.post("/:id/team", checkMasterAdmin, addTeams);
 eventRouter.get("/:id/teams", checkMasterAdmin, getTeams);
 eventRouter.get("/:id/team/:teamId", checkMasterAdmin, getTeam);
 eventRouter.delete("/:id/team/:teamId", checkMasterAdmin, deleteTeam);

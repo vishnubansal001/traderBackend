@@ -32,7 +32,7 @@ function checkFileType(file, cb) {
   }
 }
 
-module.exports = upload;
+exports.uploadCsv = upload;
 
 const memoryStorage = multer.memoryStorage();
 
@@ -44,4 +44,4 @@ const imageFileFilter = (req, file, cb) => {
   }
 };
 
-exports.uploadImage = multer({ storage: memoryStorage, fileFilter: imageFileFilter });
+exports.uploadImage = multer({ storage: storage, fileFilter: imageFileFilter });

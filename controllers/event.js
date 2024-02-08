@@ -9,6 +9,7 @@ const Department = require("../models/Department.model");
 exports.createEvent = async (req, res) => {
   try {
     const { title, description, date, teamSize } = req.body;
+    console.log(req.body);
     if (!title || !description || !date || !teamSize) {
       return res.status(400).json({
         message: "Title, description, date, teamSize are required",
@@ -18,18 +19,20 @@ exports.createEvent = async (req, res) => {
     if (!file) {
       return res.status(400).json({ message: "Poster is required" });
     }
-    const res = await cloudinary.uploader.upload(file.path);
+    console.log(file);
+    const re = await cloudinary.uploader.upload(file.path);
     const event = await Event.create({
       title,
       description,
-      poster: res.secure_url,
+      poster: re.secure_url,
       date,
       teamSize,
     });
     await event.save();
     res.status(201).json({ event });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.log(error);
+    res.status(500).json({ message: error });
   }
 };
 
@@ -63,7 +66,7 @@ exports.updateEvent = async (req, res) => {
       return res.status(400).json({ message: "Invalid event" });
     }
     const { title, description, date, teamSize } = req.body;
-    if (!title || !description || !date || !teamSize) {
+    if (!title && !description && !date && !teamSize) {
       return res.status(400).json({
         message: "Title, description, date, teamSize are required",
       });
@@ -101,7 +104,7 @@ exports.updateEvent = async (req, res) => {
         event.teamSize = teamSize;
       }
       await event.save();
-      return res.status(200).json({ event });
+      return res.status(200).json({ message:"Event Updated" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });

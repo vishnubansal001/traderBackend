@@ -40,6 +40,10 @@ exports.register = async (req, res) => {
         .status(400)
         .json({ message: "Email, password, and name are required" });
     }
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ message: "User already exists" });
+    }
     const user = await User.create({
       email,
       password,
@@ -47,7 +51,8 @@ exports.register = async (req, res) => {
       isTeamLead: false,
     });
     await user.save();
-    res.status(201).json({ user });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    res.status(201).json({ token });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

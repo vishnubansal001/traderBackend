@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User.model");
 
 const checkMasterAdmin = async (req, res, next) => {
-  const token = req.body.token;
+  const { token } = req.body;
   if (!token) {
     return res.status(401).json({ message: "No token provided" });
   }
