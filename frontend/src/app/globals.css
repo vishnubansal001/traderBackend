@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@200;300;400;500;700;800;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  background-color: rgb(20, 20, 20);
+}
+body {
+  color: white;
+  font-family: Urbanist, sans-serif;
+}
+
+html::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  display: none;
+}
+
+.scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+  height: 0px;
+}
+
+html,
+.scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.front,
+.back {
+  backface-visibility: hidden;
+}
+
+.back {
+  color: white;
+  transform: rotateY( 180deg );
+}
+
+/* div{
+  border: 1px solid red;
+} */
