@@ -24,11 +24,11 @@ const Log = () => {
 
 const page = () => {
   return (
-    <div className="p-8">
-      <div className="text-center text-5xl font-semibold">
+    <div className="p-8 flex flex-col gap-4">
+      <div className="text-center text-3xl md:text-5xl font-semibold">
         <p>History</p>
       </div>
-      <div className=" mt-10 space-y-4">
+      <div className="flex items-center flex-col justify-center gap-3 pb-[8rem]">
         <Log />
         <Log />
         <Log />

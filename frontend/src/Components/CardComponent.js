@@ -36,7 +36,7 @@ const CardComponent = ({ data }) => {
     <>
       {image && (
         <div className="h-72">
-          <div className="w-[60%] mx-auto h-full relative">
+          <div className="w-full md:w-[60%] mx-auto h-full relative">
             <div
               style={{ perspective: "1000px" }}
               className="h-full rounded-xl w-full card absolute"
