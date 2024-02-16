@@ -14,10 +14,6 @@ const Cardsforother = ({ data }) => {
           <p className="bg-transparent text-sm">Reason</p>
           <p className="bg-transparent text-sm">{data.reason}</p>
         </div>
-        <div className="bg-transparent">
-          <p className="bg-transparent text-sm">Neutral</p>
-          <p className="bg-transparent text-sm">2.70%</p>
-        </div>
       </div>
     </div>
   );

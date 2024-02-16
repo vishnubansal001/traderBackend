@@ -11,18 +11,21 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = () => {
       const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+      }
       axios
         .post(`${baseUrl}/auth/about`, { token })
         .then((res) => {
           setData(res.data);
-          // console.log(res.data);
+          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     };
     fetchData();
-  }, []);
+  }, [localStorage.getItem("token")]);
   return (
     <div className="z-10 w-full md:w-[20%] md:px-5 p-4 md:py-12 border-b md:border-b-0 md:border-l border-orange-500 fixed top-0 md:right-0 md:h-full">
       <div className="w-full h-full flex flex-row md:flex-col gap-6 items-start justify-start">
@@ -73,9 +76,17 @@ const Profile = () => {
             </div>
           </div>
           <div>
-            <button className="md:w-full w-20 bg-white text-black py-2" onClick={() => { localStorage.removeItem("token") }}>
-              Log Out
-            </button>
+            {localStorage.getItem("token") && (
+              <button
+                className="md:w-full w-20 bg-white text-black py-2"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  window.location.href = "/";
+                }}
+              >
+                Log Out
+              </button>
+            )}
           </div>
         </div>
       </div>
