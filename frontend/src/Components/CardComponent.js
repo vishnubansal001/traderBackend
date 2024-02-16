@@ -11,11 +11,10 @@ import { motion } from "framer-motion";
 
 const arr = [Card1, Card2, Card3, Card4, Card5, Card6];
 
-const CardComponent = ({data}) => {
-  const localimage =
-    localStorage.getItem("card_template") ||
-    arr[Math.floor(Math.random() * arr.length)];
-  const [image, setImage] = useState(localimage);
+const CardComponent = ({ data }) => {
+  const [image, setImage] = useState(
+    arr[Math.floor(Math.random() * arr.length)]
+  );
   const [hover, setHover] = useState(false);
   const check = typeof image;
   const style = {
@@ -23,10 +22,15 @@ const CardComponent = ({data}) => {
     backgroundSize: "cover",
   };
   useEffect(() => {
-    if (!localStorage.getItem("card_template")) {
-      localStorage.setItem("card_template", image.src);
+    if (typeof window !== "undefined" && window.localStorage) {
+      if (!localStorage.getItem("card_template")) {
+        localStorage.setItem("card_template", image.src);
+      }
+      const localimage =
+        localStorage.getItem("card_template") ||
+        arr[Math.floor(Math.random() * arr.length)];
+      setImage(localimage);
     }
-
   }, [image]);
   return (
     <>
@@ -64,7 +68,9 @@ const CardComponent = ({data}) => {
                 >
                   <div className=" bg-transparent h-40 flex flex-col justify-end w-full mx-auto">
                     <div className="flex h-20 border-y border-gray-400 px-8 items-center mt-5 bg-black">
-                      <p className="bg-transparent text-3xl">₹ {data?.history?.amount}/-</p>
+                      <p className="bg-transparent text-3xl">
+                        ₹ {data?.history?.amount}/-
+                      </p>
                     </div>
                   </div>
                 </div>

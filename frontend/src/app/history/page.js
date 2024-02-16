@@ -1,29 +1,31 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import Card from "../../Components/CardComponent";
 import Card2 from "../../Components/Cardsforother";
 import Activitycomp from "@/Components/Activitycomp";
 import axios from "axios";
 import Activitycomp1 from "@/Components/Activitycomp1";
-import baseUrl from "@/Constants/baseUrl";
 
 const Page = () => {
   const [data, setData] = useState({});
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const getReq = async () => {
-      if (!token) {
-        return;
-      }
-      console.log(token);
-      const res = await axios.post(`${baseUrl}/event/history`, {
-        token,
-      });
-      setData(res.data);
-      console.log(res.data);
-    };
-    getReq();
+    if (typeof window !== "undefined" && window.localStorage) {
+      const token = localStorage.getItem("token");
+
+      const getReq = async () => {
+        if (!token) {
+          return;
+        }
+        console.log(token);
+        const res = await axios.post(`${baseUrl}/event/history`, {
+          token,
+        });
+        setData(res.data);
+        console.log(res.data);
+      };
+
+      getReq();
+    }
   }, []);
   return (
     <main className="flex flex-col w-[60%] mx-auto p-8">
