@@ -5,12 +5,14 @@ import Image from "next/image";
 import login from "../../Assests/login.svg";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
+import toast from "react-hot-toast";
 
 const Page = () => {
   const [formdata, setFormdata] = useState({
     name: "",
     email: "",
     password: "",
+    token: "",
   });
   function onChange(e) {
     setFormdata((prev) => ({
@@ -22,10 +24,27 @@ const Page = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${baseUrl}/auth/register`, formdata);
-      localStorage.setItem("token", data.token);
-      window.location.href = "/dashboard";
+      if (
+        !localStorage.getItem("token") &&
+        localStorage.getItem("user").isTeamLead === false
+      ) {
+        return;
+      }
+
+      const event = JSON.parse(localStorage.getItem("events"));
+
+      formdata.token = localStorage.getItem("token");
+      console.log(formdata, event[0]._id);
+      const data = await axios.post(
+        `${baseUrl}/auth/${event[0]._id}/add-user`,
+        formdata
+      );
+      console.log(data);
+      setFormdata({});
+      toast.success("Member added successfully");
+      window.location.reload();
     } catch (error) {
+      toast.error(error);
       console.log(error);
     }
   };

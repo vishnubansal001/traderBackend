@@ -8,21 +8,40 @@ import baseUrl from "@/Constants/baseUrl";
 
 const Profile = () => {
   const [data, setData] = useState({});
+  const [token, setToken] = useState();
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setToken(localStorage.getItem("token"));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
   useEffect(() => {
     const fetchData = () => {
-      const token = localStorage.getItem("token");
-      axios
-        .post(`${baseUrl}/auth/about`, { token })
-        .then((res) => {
-          setData(res.data);
-          // console.log(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (typeof window !== "undefined" && window.localStorage) {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          return;
+        }
+        axios
+          .post(`${baseUrl}/auth/about`, { token })
+          .then((res) => {
+            setData(res.data);
+            localStorage.setItem("user", JSON.stringify(res.data.user));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     };
     fetchData();
-  }, []);
+  }, [token]);
   return (
     <div className="z-10 w-full md:w-[20%] md:px-5 p-4 md:py-12 border-b md:border-b-0 md:border-l border-orange-500 fixed top-0 md:right-0 md:h-full">
       <div className="w-full h-full flex flex-row md:flex-col gap-6 items-start justify-start">
@@ -61,9 +80,14 @@ const Profile = () => {
               <p>Team Members</p>
             </div>
             <div className=" text-gray-400">
-              <ol type="1" style={{ listStyleType: "decimal" }}>
-                {data?.user?.teamId?.teamMembers > 0 ? (
-                  data.user.teamId.teamMembers.map((member) => (
+              <ol
+                type="1"
+                className="list-inside"
+                style={{ listStyleType: "decimal" }}
+              >
+                {console.log(data?.user?.teamMembers)}
+                {data?.user?.teamMembers.length > 0 ? (
+                  data.user.teamMembers.map((member) => (
                     <li key={member._id}>{member.name}</li>
                   ))
                 ) : (
@@ -73,9 +97,17 @@ const Profile = () => {
             </div>
           </div>
           <div>
-            <button className="md:w-full w-20 bg-white text-black py-2" onClick={() => { localStorage.removeItem("token") }}>
-              Log Out
-            </button>
+            {token && (
+              <button
+                className="md:w-full w-20 bg-white text-black py-2"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  window.location.href = "/";
+                }}
+              >
+                Log Out
+              </button>
+            )}
           </div>
         </div>
       </div>

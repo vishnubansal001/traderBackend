@@ -33,17 +33,12 @@ const Page = () => {
       <Card data={data} />
       <section className="py-8 h-max w-full">
         <div className="text-4xl font-semibold">
-          <p className="border-b-2 w-fit border-orange-500">Assests</p>
+          <p className="border-b-2 w-fit border-orange-500">Requests</p>
         </div>
         <div className="scrollbar overflow-x-scroll flex gap-4 mt-8">
-          <Card2 />
-          <Card2 />
-          <Card2 />
-          <Card2 />
-          <Card2 />
-          <Card2 />
-          <Card2 />
-          <Card2 />
+          {data?.history?.requests.map((item, ind) => (
+            <Card2 key={ind} data={item} />
+          ))}
         </div>
       </section>
       <section className="py-8 h-max w-full pb-[8rem]">
@@ -53,9 +48,6 @@ const Page = () => {
         <div className="scrollbar overflow-x-scroll flex flex-col gap-4 mt-8">
           {data?.history?.history.map((item, ind) => (
             <Activitycomp key={ind} data={item} />
-          ))}
-          {data?.history?.requests.map((item, ind) => (
-            <Activitycomp1 key={ind} data={item} />
           ))}
         </div>
       </section>
