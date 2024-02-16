@@ -10,12 +10,12 @@ const { generateRandomPassword, deleteFile } = require("../utils/helper");
 exports.createEvent = async (req, res) => {
   try {
     const { title, description, date, teamSize } = req.body;
-    console.log(req.body);
     if (!title || !description || !date || !teamSize) {
       return res.status(400).json({
         message: "Title, description, date, teamSize are required",
       });
     }
+    console.log(req.file);
     const file = req.file;
     if (!file) {
       return res.status(400).json({ message: "Poster is required" });
