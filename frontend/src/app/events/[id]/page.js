@@ -30,7 +30,7 @@ const Page = () => {
     e.preventDefault();
     // try {
     axios
-      .post(`http://localhost:4545/auth/${id}/login`, formdata)
+      .post(`${baseUrl}/auth/${id}/login`, formdata)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {

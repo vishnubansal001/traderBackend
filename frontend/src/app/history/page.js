@@ -6,8 +6,9 @@ import Card2 from "../../Components/Cardsforother";
 import Activitycomp from "@/Components/Activitycomp";
 import axios from "axios";
 import Activitycomp1 from "@/Components/Activitycomp1";
+import baseUrl from "@/Constants/baseUrl";
 
-const page = () => {
+const Page = () => {
   const [data, setData] = useState({});
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -16,7 +17,7 @@ const page = () => {
         return;
       }
       console.log(token);
-      const res = await axios.post(`http://localhost:4545/event/history`, {
+      const res = await axios.post(`${baseUrl}/event/history`, {
         token,
       });
       setData(res.data);
@@ -59,4 +60,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import login from "../../Assests/login.svg";
 import axios from "axios";
+import baseUrl from "@/Constants/baseUrl";
 
 const Page = () => {
   const [formdata, setFormdata] = useState({
@@ -21,10 +22,7 @@ const Page = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        "http://localhost:4545/auth/register",
-        formdata
-      );
+      const { data } = await axios.post(`${baseUrl}/auth/register`, formdata);
       localStorage.setItem("token", data.token);
       window.location.href = "/dashboard";
     } catch (error) {

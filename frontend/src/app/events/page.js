@@ -3,13 +3,14 @@
 import React, { useEffect, useState } from "react";
 import EventsCard from "@/Components/EventsCard";
 import axios from "axios";
+import baseUrl from "@/Constants/baseUrl";
 
 const Page = () => {
   const [hover, setHover] = useState(false);
   const [event, setEvents] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const events = await axios.get("http://localhost:4545/event");
+      const events = await axios.get(`${baseUrl}/event`);
       console.log(events);
       setEvents(events.data.events);
     };
@@ -18,8 +19,8 @@ const Page = () => {
   return (
     <div className=" w-[60%] mx-auto p-8">
       <div className="">
-        {event?.map((event) => (
-          <EventsCard event={event} />
+        {event?.map((event, index) => (
+          <EventsCard key={index} event={event} />
         ))}
       </div>
     </div>
