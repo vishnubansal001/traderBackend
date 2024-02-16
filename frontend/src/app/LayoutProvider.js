@@ -1,27 +1,24 @@
-"use client"
+"use client";
+import React from "react";
+import { usePathname } from "next/navigation";
+import Sidebar from "../Components/SideNavigationBar";
+import Profile from "../Components/Profile";
 
-import React from 'react'
-import { usePathname } from 'next/navigation'
-import Sidebar from '../Components/SideNavigationBar'
-import Profile from '../Components/Profile'
-
-const LayoutProvider = ({children}) => {
-    const pathname = usePathname();
+const LayoutProvider = ({ children }) => {
+  const pathname = usePathname();
   return (
     <>
       {pathname == "/admin" || pathname.match(/^\/admin\//) ? (
-      <>
-        {children}
-      </>
+        <>{children}</>
       ) : (
         <>
-            <Sidebar />
-            {children}
-            <Profile />
+          <Sidebar />
+          {children}
+          <Profile />
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default LayoutProvider
+export default LayoutProvider;
