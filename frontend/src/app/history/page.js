@@ -5,10 +5,12 @@ import Card2 from "../../Components/Cardsforother";
 import Activitycomp from "@/Components/Activitycomp";
 import axios from "axios";
 import Activitycomp1 from "@/Components/Activitycomp1";
+import baseUrl from "@/Constants/baseUrl";
 
 const Page = () => {
   const [data, setData] = useState({});
   useEffect(() => {
+
     if (typeof window !== "undefined" && window.localStorage) {
       const token = localStorage.getItem("token");
 
@@ -26,6 +28,7 @@ const Page = () => {
 
       getReq();
     }
+
   }, []);
   return (
     <main className="flex flex-col w-[60%] mx-auto p-8">
