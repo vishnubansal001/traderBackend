@@ -32,7 +32,7 @@ const AdminSideBar = () => {
     setClicked(updatedSelected);
   }
   return (
-    <div className="min-h-screen w-[20%] text-white px-8 py-5 border-r border-orange-500 fixed left-0">
+    <div className="z-10 md:min-h-screen w-full md:w-[20%] text-white flex flex-col gap-6 p-4 md:px-8 md:py-5 border-t md:border-r border-orange-500 fixed bottom-0 md:left-0">
       <div className="flex items-center justify-center lg:flex-row flex-col">
         <div className="flex items-center justify-center">
           <div className="w-5 h-5 rotate-45 bg-orange-500"></div>
@@ -40,9 +40,9 @@ const AdminSideBar = () => {
         </div>
         <p className="text-center">Traders Portal</p>
       </div>
-      <div className="mt-10 space-y-2">
+      <div className="gap-2 w-full flex flex-row md:flex-col items-center justify-center">
         <div
-          className={`w-full justify-center cursor-pointer flex items-center md:px-5 md:py-3 rounded-lg gap-2 ${
+          className={`w-full justify-center cursor-pointer flex items-center p-2 md:px-5 md:py-3 rounded-lg gap-2 ${
             clicked.admin && "border border-orange-500"
           }`}
           onClick={() => {
@@ -56,7 +56,7 @@ const AdminSideBar = () => {
           </div>
         </div>
         <div
-          className={`w-full justify-center cursor-pointer flex items-center md:px-5 md:py-3 rounded-lg gap-2 ${
+          className={`w-full justify-center cursor-pointer flex items-center p-2 md:px-5 md:py-3 rounded-lg gap-2 ${
             clicked["create-event"] && "border border-orange-500"
           }`}
           onClick={() => {
@@ -70,7 +70,7 @@ const AdminSideBar = () => {
           </div>
         </div>
         <div
-          className={`w-full justify-center cursor-pointer flex items-center md:px-5 md:py-3 rounded-lg gap-2 ${
+          className={`w-full justify-center cursor-pointer flex items-center p-2 md:px-5 md:py-3 rounded-lg gap-2 ${
             clicked["event-listing"] && "border border-orange-500"
           }`}
           onClick={() => {
@@ -84,7 +84,7 @@ const AdminSideBar = () => {
           </div>
         </div>
         <div
-          className={`w-full justify-center cursor-pointer flex items-center md:px-5 md:py-3 rounded-lg gap-2 ${
+          className={`w-full justify-center cursor-pointer flex items-center p-2 md:px-5 md:py-3 rounded-lg gap-2 ${
             clicked.history && "border border-orange-500"
           }`}
           onClick={() => {
@@ -98,12 +98,12 @@ const AdminSideBar = () => {
           </div>
         </div>
         <div
-          className={`w-full justify-center cursor-pointer flex items-center md:px-5 md:py-3 rounded-lg gap-2 ${
+          className={`w-full justify-center cursor-pointer flex items-center p-2 md:px-5 md:py-3 rounded-lg gap-2 ${
             clicked.settings && "border border-orange-500"
           }`}
           onClick={() => {
             onSet("settings");
-            router.push("/settings");
+            router.push("/admin/settings");
           }}
         >
           <IoSettingsOutline className="w-4 h-4 lg:w-6 lg:h-6" />

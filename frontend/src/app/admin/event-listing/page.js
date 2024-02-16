@@ -11,9 +11,9 @@ const Card = () => {
   const id = "fjhdgdfjhdsagfkhjsdhf";
   const router = useRouter();
   return (
-    <div className="rounded-md overflow-hidden w-96 border border-white hover:border-orange-500">
+    <div className="rounded-md overflow-hidden w-full border border-white hover:border-orange-500">
       <div
-        className=" w-96 h-60 relative overflow-hidden duration-150 ease-in-out"
+        className="w-full h-60 relative overflow-hidden duration-150 ease-in-out"
         onMouseOver={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
@@ -40,14 +40,17 @@ const Card = () => {
           </div>
         )}
       </div>
-      <div className="flex items-center justify-center gap-4 flex-col">
-        <div className="flex items-center justify-center p-1">
+      <div className="flex items-center justify-center gap-4 w-full flex-col">
+        <div className="flex items-center justify-between flex-row w-full px-3 py-1">
+          <p>Event Name</p>
           <p>Event Name</p>
         </div>
-        <div className="flex items-center justify-center p-1">
+        <div className="flex items-center justify-between flex-row w-full px-3 py-1">
+          <p>Event Description</p>
           <p>Event Description</p>
         </div>
-        <div className="flex items-center justify-center p-1">
+        <div className="flex items-center justify-between flex-row w-full px-3 py-1">
+          <p>Event Date</p>
           <p>Event Date</p>
         </div>
         <div className="w-full">
@@ -65,9 +68,11 @@ const Card = () => {
 
 const page = () => {
   return (
-    <div className="p-8">
-      <div className="text-center text-5xl font-semibold">Event Listing</div>
-      <div className="grid grid-cols-2 gap-8 mt-10">
+    <div className="p-8 flex flex-col gap-4">
+      <div className="text-center text-3xl md:text-5xl font-semibold">
+        Event Listing
+      </div>
+      <div className="grid pb-[8rem] grid-cols-1 xs:grid-cols-2 gap-8">
         <div className="flex justify-center">
           <Card />
         </div>

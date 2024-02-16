@@ -2,7 +2,7 @@ import React from "react";
 
 const Page = () => {
   return (
-    <div className="p-8 flex flex-col gap-4">
+    <div className="w-full p-8 flex flex-col gap-4">
       <div className="text-5xl font-semibold">
         <p>Admin Users</p>
       </div>

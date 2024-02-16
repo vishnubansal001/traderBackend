@@ -8,7 +8,7 @@ import "react-quill/dist/quill.snow.css";
 const Page = () => {
   const [value, setValue] = useState("");
   return (
-    <div className=" w-[60%] mx-auto p-8">
+    <div className=" md:pt-0 pt-[8rem] w-full md:w-[60%] mx-auto p-8">
       <div className="w-full h-60 relative">
         <ReactQuill
           theme="snow"
