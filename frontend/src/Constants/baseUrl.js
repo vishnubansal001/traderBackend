@@ -1,1 +1,3 @@
-export default const baseUrl = "http://localhost:4545";
+const baseUrl = "http://localhost:4545";
+export default baseUrl;
+

@@ -6,7 +6,7 @@ export default function Home() {
           <iframe
             src="https://codingninjas-cuiet.in"
             className="w-[60%] h-[100dvh]"
-            frameborder="0"
+            frameBorder="0"
           ></iframe>
         </section>
       </main>
