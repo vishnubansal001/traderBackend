@@ -50,10 +50,13 @@ const Card = () => {
         <div className="flex items-center justify-center p-1">
           <p>Event Date</p>
         </div>
-        <div className="w-full flex justify-center bg-red-500 text-white hover:bg-transparent hover:border-t hover:border-orange-500 hover:text-red-500">
-          <button>
-            <MdDelete className="text-3xl bg-transparent" />
-          </button>
+        <div className="w-full">
+          <button className="w-full py-2 bg-green-600 hover:bg-green-700 focus:bg-green-800" onClick={()=>{router.push(`/admin/event-listing/${id}/create-user`)}}>Create Users</button>
+          <div className="w-full flex justify-center bg-red-500 text-white hover:bg-transparent hover:border-t hover:border-orange-500 hover:text-red-500">
+            <button>
+              <MdDelete className="text-3xl bg-transparent" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
