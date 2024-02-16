@@ -38,7 +38,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="w-[100%] flex md:flex-col text-sm md:text-base flex-row gap-4">
-          <div className="w-max text-gray-400 gap-4 flex flex-col gap-2">
+          <div className="w-max text-gray-400 flex flex-col gap-2">
             <div className="text-orange-500">
               <p>Account</p>
             </div>
@@ -55,8 +55,8 @@ const Profile = () => {
           </div>
           <hr className=" bg-white text-white md:rotate-0 rotate-90" />
         </div>
-        <div className="w-[100%] flex md:flex-col text-sm md:text-base flex-row gap-4">
-          <div className="w-max flex flex-col gap-2">
+        <div className="w-[100%] flex md:flex-col h-full justify-between text-sm md:text-base flex-row gap-4">
+          <div className="w-max flex flex-col gap-2 max-[470px]:hidden">
             <div>
               <p>Team Members</p>
             </div>
@@ -71,6 +71,11 @@ const Profile = () => {
                 )}
               </ol>
             </div>
+          </div>
+          <div>
+            <button className="md:w-full w-20 bg-white text-black py-2" onClick={() => { localStorage.removeItem("token") }}>
+              Log Out
+            </button>
           </div>
         </div>
       </div>
