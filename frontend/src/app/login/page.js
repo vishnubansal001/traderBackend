@@ -19,16 +19,13 @@ const Page = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        "http://localhost:4545/auth/login",
-        formdata
-      );
+      const { data } = await axios.post(`${baseUrl}/auth/login`, formdata);
       localStorage.setItem("token", data.token);
       window.location.href = "/dashboard";
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   return (
     <div className=" w-[60%] mx-auto p-8">
       <div className="flex flex-col items-center w-full">

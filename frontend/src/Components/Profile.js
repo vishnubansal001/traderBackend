@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import profile from "../Assests/Kim Seon Ho - Link 1.png";
 import axios from "axios";
+import baseUrl from "@/Constants/baseUrl";
 
 const Profile = () => {
   const [data, setData] = useState({});
@@ -11,7 +12,7 @@ const Profile = () => {
     const fetchData = () => {
       const token = localStorage.getItem("token");
       axios
-        .post("http://localhost:4545/auth/about", { token })
+        .post(`${baseUrl}/auth/about`, { token })
         .then((res) => {
           setData(res.data);
           // console.log(res.data);
