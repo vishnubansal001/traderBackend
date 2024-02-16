@@ -28,6 +28,9 @@ app.use("/request", requestRouter);
 app.use("/transaction", transactionRouter);
 app.use("/admin", adminRouter);
 
+app.use("/", (req, res) => {
+  res.send("Welcome to the server");
+});
 
 app.listen(process.env.PORT, async () => {
   console.log(`Server is listening on port ${process.env.PORT}!`);
