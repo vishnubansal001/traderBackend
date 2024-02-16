@@ -5,6 +5,7 @@ import Image from "next/image";
 import login from "../../Assests/login.svg";
 import baseUrl from "@/Constants/baseUrl";
 import axios from "axios";
+import baseUrl from "@/Constants/baseUrl";
 
 const Page = () => {
   const [formdata, setFormdata] = useState({
@@ -23,7 +24,7 @@ const Page = () => {
       console.log(formdata);
       const { data } = await axios.post(`${baseUrl}/auth/login`, formdata);
       localStorage.setItem("token", data.token);
-      window.location.href = "/admin";
+      window.location.href = "admin/dashboard";
     } catch (error) {
       console.log(error);
     }

@@ -5,7 +5,7 @@ import Image from "next/image";
 import testing from "../Assests/testing.jpeg";
 import { useRouter } from "next/navigation";
 
-const EventsCard = ({event}) => {
+const EventsCard = ({ event }) => {
   const [hover, setHover] = useState(false);
   const date = new Date(event.date);
   const router = useRouter();
@@ -17,7 +17,7 @@ const EventsCard = ({event}) => {
           <div className="bg-transparent text-base flex items-center justify-center">
             <p className="bg-transparent">{date.toDateString()}</p>
           </div>
-          <div className="bg-transparent text-base flex items-center justify-center">
+          <div className="bg-transparent text-base flex items-center text-center justify-center">
             <p className="bg-transparent">{event.description}</p>
           </div>
         </div>
