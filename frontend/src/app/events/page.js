@@ -12,6 +12,9 @@ const Page = () => {
     const fetchData = async () => {
       const events = await axios.get(`${baseUrl}/event`);
       console.log(events);
+      if (typeof window !== "undefined" && window.localStorage) {
+        localStorage.setItem("events", JSON.stringify(events.data.events));
+      }
       setEvents(events.data.events);
     };
     fetchData();
