@@ -97,20 +97,6 @@ const AdminSideBar = () => {
             <p>History</p>
           </div>
         </div>
-        <div
-          className={`w-full justify-center cursor-pointer flex items-center p-2 md:px-5 md:py-3 rounded-lg gap-2 ${
-            clicked.settings && "border border-orange-500"
-          }`}
-          onClick={() => {
-            onSet("settings");
-            router.push("/admin/settings");
-          }}
-        >
-          <IoSettingsOutline className="w-4 h-4 lg:w-6 lg:h-6" />
-          <div className="lg:flex hidden w-full items-center">
-            <p>Settings</p>
-          </div>
-        </div>
       </div>
     </div>
   );

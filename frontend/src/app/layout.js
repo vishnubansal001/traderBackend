@@ -10,11 +10,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`flex justify-between`}>
-        <LayoutProvider>
-          {children}
-        </LayoutProvider>
-      {/* <Toaster position="top-right" /> */}
+      <body>
+        <LayoutProvider>{children}</LayoutProvider>
+        {/* <Toaster position="top-right" /> */}
       </body>
     </html>
   );
