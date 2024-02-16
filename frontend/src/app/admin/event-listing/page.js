@@ -65,11 +65,11 @@ const Card = () => {
 
 const page = () => {
   return (
-    <div className="p-8 flex flex-col gap-4">
+    <div className="p-8 flex flex-col gap-6">
       <div className="text-center text-3xl md:text-5xl font-semibold">
         Event Listing
       </div>
-      <div className="grid pb-[8rem] grid-cols-1 xs:grid-cols-2 gap-8">
+      <div className="grid pb-[8rem] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <div className="flex justify-center">
           <Card />
         </div>

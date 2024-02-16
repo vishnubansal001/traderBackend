@@ -28,7 +28,7 @@ const page = () => {
       <div className="text-center text-3xl md:text-5xl font-semibold">
         <p>History</p>
       </div>
-      <div className="flex items-center flex-col justify-center gap-3 pb-[8rem]">
+      <div className="flex items-center flex-col justify-center gap-3 pb-[8rem] md:pb-0">
         <Log />
         <Log />
         <Log />

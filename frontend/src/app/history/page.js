@@ -29,7 +29,7 @@ const Page = () => {
     }
   }, []);
   return (
-    <main className="flex flex-col md:pt-0 pt-[8rem]  w-full md:w-[60%] mx-auto p-8">
+    <main className="flex flex-col md:pt-8 pt-[8rem]  w-full md:w-[60%] mx-auto p-8">
       <Card data={data} />
       <section className="py-8 h-max w-full">
         <div className="text-4xl font-semibold">
