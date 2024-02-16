@@ -24,7 +24,7 @@ const Profile = () => {
     fetchData();
   }, []);
   return (
-    <div className="z-10 w-full md:w-[20%] md:px-5 p-4 md:py-12 border-b md:border-l border-orange-500 fixed top-0 md:right-0 md:h-full">
+    <div className="z-10 w-full md:w-[20%] md:px-5 p-4 md:py-12 border-b md:border-b-0 md:border-l border-orange-500 fixed top-0 md:right-0 md:h-full">
       <div className="w-full h-full flex flex-row md:flex-col gap-6 items-start justify-start">
         <div className="w-[100%] text-sm md:text-base flex flex-col gap-2">
           <div className="text-center">

@@ -14,7 +14,7 @@ const LayoutProvider = ({ children }) => {
       ) : (
         <>
           <Sidebar />
-          {children}
+          <div className="min-h-screen">{children}</div>
           <Profile />
         </>
       )}

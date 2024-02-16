@@ -32,7 +32,7 @@ const SideNavigationBar = () => {
     setClicked(updatedSelected);
   }
   return (
-    <div className="z-10 md:min-h-screen w-full md:w-[20%] text-white flex flex-col gap-6 p-4 md:px-8 md:py-5 border-t md:border-r border-orange-500 fixed bottom-0 md:left-0">
+    <div className="z-10 md:min-h-screen w-full md:w-[20%] text-white flex flex-col gap-6 p-4 md:px-8 md:py-5 border-t md:border-t-0 md:border-r border-orange-500 fixed bottom-0 md:left-0">
       <div className="flex items-center justify-center lg:flex-row flex-col">
         <div className="flex items-center justify-center">
           <div className="w-5 h-5 rotate-45 bg-orange-500"></div>
