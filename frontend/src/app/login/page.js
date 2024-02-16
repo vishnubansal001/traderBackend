@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import login from "../../Assests/login.svg";
+import baseUrl from "@/Constants/baseUrl";
 import axios from "axios";
 
 const Page = () => {
@@ -19,9 +20,10 @@ const Page = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(formdata);
       const { data } = await axios.post(`${baseUrl}/auth/login`, formdata);
       localStorage.setItem("token", data.token);
-      window.location.href = "/dashboard";
+      window.location.href = "/admin";
     } catch (error) {
       console.log(error);
     }
