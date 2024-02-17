@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <LayoutProvider>
-          <Toaster />
+          {/* <Toaster /> */}
           {children}
         </LayoutProvider>
         {/* <Toaster position="top-right" /> */}

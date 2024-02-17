@@ -10,6 +10,18 @@ import baseUrl from "@/Constants/baseUrl";
 const Card = ({ data }) => {
   const [hover, setHover] = useState(false);
   const router = useRouter();
+  const handleDelete = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const eventDelete = await axios.delete(`${baseUrl}/event/${id}`, {
+        data: { token },
+      });
+      console.log(eventDelete);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="rounded-md overflow-hidden w-full border border-white hover:border-orange-500">
       <div
@@ -63,7 +75,10 @@ const Card = ({ data }) => {
           </button>
           <div className="w-full flex justify-center bg-red-500 text-white hover:bg-transparent hover:border-t hover:border-orange-500 hover:text-red-500">
             <button>
-              <MdDelete className="text-3xl bg-transparent" />
+              <MdDelete
+                onClick={() => handleDelete(data._id)}
+                className="text-3xl bg-transparent"
+              />
             </button>
           </div>
         </div>
