@@ -11,7 +11,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <LayoutProvider>{children}</LayoutProvider>
+        <LayoutProvider>
+          <Toaster />
+          {children}
+        </LayoutProvider>
         {/* <Toaster position="top-right" /> */}
       </body>
     </html>

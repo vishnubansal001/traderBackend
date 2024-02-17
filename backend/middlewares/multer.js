@@ -6,10 +6,7 @@ const storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(
-      null,
-      "users" + "-" + Date.now() + path.extname(file.originalname)
-    );
+    cb(null, "users" + "-" + Date.now() + path.extname(file.originalname));
   },
 });
 
@@ -35,18 +32,11 @@ function checkFileType(file, cb) {
 exports.uploadCsv = upload;
 
 const imageFileFilter = (req, file, cb) => {
-  console.log("check");
-  if (file.mimetype.startsWith('image/')) {
+  if (file.mimetype.startsWith("image/")) {
     cb(null, true);
   } else {
-    cb(new Error('Unsupported file type'), false);
+    cb(new Error("Unsupported file type"), false);
   }
 };
 
-exports.uploadImage = (req,res) => {
-  console.log("multer");
-  console.log(req.body);
-  console.log(req.file);
-  console.log("multer wala")
-  multer({ storage: storage, fileFilter: imageFileFilter }).single("image")
-}
+exports.uploadImage = multer({ storage: storage, fileFilter: imageFileFilter });

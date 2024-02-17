@@ -11,7 +11,7 @@ const Page = () => {
     poster: {},
     date: "",
     teamSize: 1,
-    token: ""
+    token: "",
   });
 
   const { title, description, date, teamSize } = formdata;
@@ -39,7 +39,6 @@ const Page = () => {
     }
   }
 
-
   async function onSubmit(e) {
     e.preventDefault();
     try {
@@ -49,32 +48,35 @@ const Page = () => {
         return;
       }
       const formdataWithtoken = {
-        title: formdata.title.toString(),
-        description: formdata.description.toString(),
-        poster: formdata.poster.toString(),
-        date: formdata.date.toString(),
-        teamSize: formdata.teamSize.toString(),
-        token: token.toString()
+        title: formdata.title,
+        description: formdata.description,
+        poster: formdata.poster,
+        date: formdata.date,
+        teamSize: formdata.teamSize,
+        token: token,
       };
       console.log(formdataWithtoken);
-      const response = await axios.post(`${baseUrl}/event`,{...formdataWithtoken}, {
-        headers: {
-          'Content-Type': 'multipart/form-data' // Ensure that the correct content type is set
-        }
-      }).then((res)=>{setFormdata({
-        title: "",
-        description: "",
-        poster: {},
-        date: "",
-        teamSize: 1,
-        token: ""
-      })});
-      console.log(response.data);
+      const response = await axios
+        .post(`${baseUrl}/event`, formdataWithtoken, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          setFormdata({
+            title: "",
+            description: "",
+            poster: {},
+            date: "",
+            teamSize: 1,
+            token: "",
+          });
+        });
+      toast.success("Event Created", response);
     } catch (error) {
       console.log(error);
     }
   }
-
 
   return (
     <div className="p-8 md:w-auto w-full pb-[4rem] flex items-center flex-col gap-3">
