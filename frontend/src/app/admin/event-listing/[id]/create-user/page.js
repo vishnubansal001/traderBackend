@@ -186,7 +186,7 @@ const Page = () => {
           <div>
             <input
               type="file"
-              accept=".csv,.xlsx"
+              accept=".csv"
               name="name"
               id="name"
               className="bg-white w-full text-black py-2 px-3 w-64"

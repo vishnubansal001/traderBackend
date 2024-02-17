@@ -1,32 +1,37 @@
 "use client";
 
 import React, { useState } from "react";
+import axios from "axios";
+import baseUrl from "@/Constants/baseUrl";
 
 const Page = () => {
   const [formdata, setFormdata] = useState({
-    name: "",
+    title: "",
     description: "",
-    date: "",
     poster: {},
+    date: "",
+    teamSize: 1,
+    token: ""
   });
 
-  const { name, description, date, poster } = formdata;
+  const { title, description, date, teamSize } = formdata;
 
   function onChange(e) {
-    let boolean = null;
-    if (e.target.value === "true") {
-      boolean = true;
-    }
-    if (e.target.value === "false") {
-      boolean = false;
-    }
     if (e.target.files) {
+      // If the input is a file input
       setFormdata((prev) => ({
         ...prev,
-        poster: e.target.files,
+        [e.target.id]: e.target.files[0], // Set the poster property to the selected file
       }));
-    }
-    if (!e.target.files) {
+    } else {
+      // If the input is not a file input
+      let boolean = null;
+      if (e.target.value === "true") {
+        boolean = true;
+      }
+      if (e.target.value === "false") {
+        boolean = false;
+      }
       setFormdata((prev) => ({
         ...prev,
         [e.target.id]: boolean ?? e.target.value,
@@ -34,10 +39,42 @@ const Page = () => {
     }
   }
 
-  function onSubmit(e) {
+
+  async function onSubmit(e) {
     e.preventDefault();
-    console.log(formdata);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token not found");
+        return;
+      }
+      const formdataWithtoken = {
+        title: formdata.title.toString(),
+        description: formdata.description.toString(),
+        poster: formdata.poster.toString(),
+        date: formdata.date.toString(),
+        teamSize: formdata.teamSize.toString(),
+        token: token.toString()
+      };
+      console.log(formdataWithtoken);
+      const response = await axios.post(`${baseUrl}/event`,{...formdataWithtoken}, {
+        headers: {
+          'Content-Type': 'multipart/form-data' // Ensure that the correct content type is set
+        }
+      }).then((res)=>{setFormdata({
+        title: "",
+        description: "",
+        poster: {},
+        date: "",
+        teamSize: 1,
+        token: ""
+      })});
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
+
 
   return (
     <div className="p-8 md:w-auto w-full pb-[4rem] flex items-center flex-col gap-3">
@@ -47,13 +84,13 @@ const Page = () => {
       <div className="w-full flex justify-center">
         <div className="w-max flex flex-col gap-4">
           <div>
-            <label htmlFor="name">Event Name:</label>
+            <label htmlFor="title">Event Name:</label>
             <div>
               <input
                 type="text"
-                name="name"
-                id="name"
-                value={name}
+                name="title"
+                id="title"
+                value={title}
                 className="bg-white text-black py-2 px-3 w-64"
                 placeholder="Event Name"
                 onChange={onChange}
@@ -84,6 +121,20 @@ const Page = () => {
                 name="date"
                 id="date"
                 value={date}
+                className="bg-white text-black py-2 px-3 w-64"
+                onChange={onChange}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="teamSize">Team Size:</label>
+            <div>
+              <input
+                type="number"
+                name="teamSize"
+                id="teamSize"
+                value={teamSize}
                 className="bg-white text-black py-2 px-3 w-64"
                 onChange={onChange}
               />

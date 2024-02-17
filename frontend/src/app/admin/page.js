@@ -74,13 +74,13 @@ const Page = () => {
       setExecutives(fetcher1.data.executives);
       const fetcher2 = await axios.get(`${baseUrl}/admin/junior-admins`).catch((error) => { console.log(error) });
       setJunior(fetcher2.data.juniorAdmins);
-      const request = await axios.get(`${baseUrl}/event/`).catch((error) => { console.log(error) })
-      const events = request.data.events;
+      const request = await axios.get(`${baseUrl}/event/`)
+      const events = request?.data?.events;
       const departments = await axios.get(`${baseUrl}/event/${events[0]._id}/departments`).catch((error) => { console.log(error) })
       setDepartments(departments.data.departments);
     }
     allfetching();
-  })
+  },[])
   return (
     <div className="w-full p-8 flex flex-col gap-4">
       <div className="text-5xl font-semibold">

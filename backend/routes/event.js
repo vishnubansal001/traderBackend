@@ -28,7 +28,7 @@ const eventRouter = express.Router();
 
 eventRouter.post(
   "/",
-  uploadImage.single("poster"),
+  uploadImage,
   validateEvent,
   validateFormInputMiddleware,
   checkMasterAdmin,

@@ -15,7 +15,6 @@ exports.createEvent = async (req, res) => {
         message: "Title, description, date, teamSize are required",
       });
     }
-    console.log(req.file);
     const file = req.file;
     if (!file) {
       return res.status(400).json({ message: "Poster is required" });

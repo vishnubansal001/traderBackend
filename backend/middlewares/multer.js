@@ -35,6 +35,7 @@ function checkFileType(file, cb) {
 exports.uploadCsv = upload;
 
 const imageFileFilter = (req, file, cb) => {
+  console.log("check");
   if (file.mimetype.startsWith('image/')) {
     cb(null, true);
   } else {
@@ -42,4 +43,10 @@ const imageFileFilter = (req, file, cb) => {
   }
 };
 
-exports.uploadImage = multer({ storage: storage, fileFilter: imageFileFilter });
+exports.uploadImage = (req,res) => {
+  console.log("multer");
+  console.log(req.body);
+  console.log(req.file);
+  console.log("multer wala")
+  multer({ storage: storage, fileFilter: imageFileFilter }).single("image")
+}
