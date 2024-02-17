@@ -114,6 +114,7 @@ exports.deleteEvent = async (req, res) => {
   try {
     const { id } = req.params;
     const event = await Event.findById(id);
+
     if (!event) {
       return res.status(400).json({ message: "Invalid event" });
     }
@@ -429,15 +430,16 @@ exports.history = async (req, res) => {
     }
     if (user.role === "user") {
       const user = await User.findById(decoded.id);
-      const history = await Team.findById(user.teamId).populate("history").populate("requests").populate(
-        {
+      const history = await Team.findById(user.teamId)
+        .populate("history")
+        .populate("requests")
+        .populate({
           path: "requests",
           populate: {
             path: "department",
             model: "Department",
           },
-        }
-      );
+        });
       // console.log(history);
       res.status(200).json({ history });
     } else {

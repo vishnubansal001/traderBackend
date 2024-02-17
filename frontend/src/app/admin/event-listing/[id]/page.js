@@ -1,18 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import baseUrl from "@/Constants/baseUrl";
+import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
 
-const Card = () => {
+const Card = ({ data }) => {
+  const { id } = useParams();
   const router = useRouter();
-  const params = useParams();
-  const dept_id = "hwgefjhwgfkdjhsfgw";
+  const [departmentHead, setDepartmentHead] = useState();
+  useEffect(() => {
+    async function fetchUserName() {
+      const departmentAdmin = await axios.get(
+        `${baseUrl}/admin/users/${data.departmentHead}`
+      );
+      setDepartmentHead(departmentAdmin.data.user);
+    }
+    fetchUserName();
+  }, [data]);
+  console.log(data);
   return (
     <div
-      className="relative group bg-back noise-panel rounded-sm shadow-lg drop-shadow-sm border-[1px] border-[#222222] py-4 w-64 p-5 gap-2  hover:border-orange-500"
-      onClick={() =>
-        router.push(`/admin/event-listing/${params.id}/${dept_id}`)
-      }
+      className="relative group bg-back noise-panel rounded-sm shadow-lg drop-shadow-sm border-[1px] border-[#222222] py-4 w-96 p-5 gap-2  hover:border-orange-500"
+      onClick={() => router.push(`/admin/event-listing/${id}/${data._id}`)}
     >
       <div className="flex gap-2 bg-transparent w-full">
         <div className="w-full  bg-transparent">
@@ -21,7 +31,9 @@ const Card = () => {
           </p>
         </div>
         <div className="w-full bg-transparent flex justify-end">
-          <p className=" bg-transparent lg:text-base sm:text-sm text-xs">ABS</p>
+          <p className=" bg-transparent lg:text-base sm:text-sm text-xs">
+            {data.name}
+          </p>
         </div>
       </div>
       <div className="flex gap-2 bg-transparent w-full">
@@ -31,8 +43,8 @@ const Card = () => {
           </p>
         </div>
         <div className="w-full bg-transparent flex justify-end">
-          <p className=" bg-transparent lg:text-base sm:text-sm text-xs">
-            Desc
+          <p className=" bg-transparent text-right lg:text-base sm:text-sm text-xs">
+            {data.description}
           </p>
         </div>
       </div>
@@ -44,7 +56,7 @@ const Card = () => {
         </div>
         <div className="w-full bg-transparent flex justify-end">
           <p className="break-words bg-transparent lg:text-base sm:text-sm text-xs">
-            Ansh
+            {departmentHead?.name}
           </p>
         </div>
       </div>
@@ -53,10 +65,23 @@ const Card = () => {
 };
 
 const Page = () => {
+  const [departments, setDepartments] = useState();
+  const { id } = useParams();
+  useEffect(() => {
+    async function fetchDepartments() {
+      const departments = await axios.get(`${baseUrl}/event/${id}/departments`);
+      setDepartments(departments.data.departments);
+    }
+    fetchDepartments();
+  }, []);
   const [formData, setFormData] = useState({
     name: "",
+    description: "",
+    executiveId: "",
+    token: "",
   });
-  const { name } = formData;
+
+  const { name, description, executiveId } = formData;
   function onChange(e) {
     setFormData((prev) => ({
       ...prev,
@@ -64,9 +89,20 @@ const Page = () => {
     }));
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
-    console.log(formData);
+    const { id } = router.query;
+    const token = localStorage.getItem("token");
+    formData.token = token;
+    try {
+      const department = await axios.post(
+        `${baseUrl}/events/${id}/department`,
+        formData
+      );
+      console.log(department);
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <div className="p-8 flex flex-col items-center">
@@ -74,11 +110,11 @@ const Page = () => {
         <p>Department Creation</p>
       </div>
       <div className="mt-8 w-full overflow-x-scroll flex gap-5 py-5 scrollbar">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {departments && departments.length > 0 ? (
+          departments.map((item) => <Card key={item._id} data={item} />)
+        ) : (
+          <p>No Department Created</p>
+        )}
       </div>
       <div className="w-fit mt-10 space-y-2">
         <div>
@@ -91,6 +127,34 @@ const Page = () => {
             id="name"
             value={name}
             placeholder="Enter Department Name"
+            className="bg-white text-black py-2 px-3 w-72"
+            onChange={onChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="name">Department Description</label>
+        </div>
+        <div>
+          <input
+            type="text"
+            name="executiveId"
+            id="executiveId"
+            value={executiveId}
+            placeholder="Enter executiveId"
+            className="bg-white text-black py-2 px-3 w-72"
+            onChange={onChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="name">Department Name</label>
+        </div>
+        <div>
+          <input
+            type="text"
+            name="description"
+            id="description"
+            value={description}
+            placeholder="Enter Department Description"
             className="bg-white text-black py-2 px-3 w-72"
             onChange={onChange}
           />
