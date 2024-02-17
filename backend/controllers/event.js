@@ -19,7 +19,6 @@ exports.createEvent = async (req, res) => {
     if (!file) {
       return res.status(400).json({ message: "Poster is required" });
     }
-    console.log(file);
     const re = await cloudinary.uploader.upload(file.path);
     const event = await Event.create({
       title,

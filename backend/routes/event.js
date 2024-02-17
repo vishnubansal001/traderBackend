@@ -16,7 +16,7 @@ const {
   deleteTeam,
   banTeam,
   unbanTeam,
-  history
+  history,
 } = require("../controllers/event");
 const { uploadImage, uploadCsv } = require("../middlewares/multer");
 const {
@@ -28,7 +28,7 @@ const eventRouter = express.Router();
 
 eventRouter.post(
   "/",
-  uploadImage,
+  uploadImage.single("poster"),
   validateEvent,
   validateFormInputMiddleware,
   checkMasterAdmin,
@@ -62,6 +62,6 @@ eventRouter.post("/:id/team/:teamId", checkMasterAdmin, getTeam); // done
 eventRouter.delete("/:id/team/:teamId", checkMasterAdmin, deleteTeam); // done
 eventRouter.put("/:id/team/:teamId/ban", checkMasterAdmin, banTeam); // done
 eventRouter.put("/:id/team/:teamId/unban", checkMasterAdmin, unbanTeam); // done
-eventRouter.post("/history",history); // done
+eventRouter.post("/history", history); // done
 
 module.exports = eventRouter;
