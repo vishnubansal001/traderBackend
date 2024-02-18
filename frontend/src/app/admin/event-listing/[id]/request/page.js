@@ -4,6 +4,19 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
 import { useParams } from "next/navigation";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  Pagination,
+  Chip,
+  Tooltip,
+} from "@nextui-org/react";
+import { FaBan, FaEye } from "react-icons/fa";
+import { TiTick } from "react-icons/ti";
 
 const Log = ({ ind, data }) => {
   const dateTime = data.createdAt.split(/[T.]/);
@@ -31,10 +44,26 @@ const Log = ({ ind, data }) => {
   );
 };
 
+const columns = [
+  { name: "Sr No.", uid: "_id" },
+  { name: "Subject", uid: "subject" },
+  { name: "Team Name", uid: "team" },
+  { name: "Department ID", uid: "department" },
+  { name: "Amount", uid: "amount" },
+  { name: "Reason", uid: "reason" },
+  { name: "Status", uid: "status" },
+  { name: "Action", uid: "actions" },
+];
+const statusColorMap = {
+  pending: "warning",
+  approved: "success",
+  declined: "danger",
+};
+
 const Page = () => {
   const params = useParams();
-  const [logs, setLogs] = useState([]);
   const { id } = params;
+  const [requests, setRequests] = useState([]);
 
   useEffect(() => {
     async function allfetching() {
@@ -45,7 +74,7 @@ const Page = () => {
             token,
           });
           console.log(res);
-          setLogs(res?.data?.requests);
+          setRequests(res?.data?.requests);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -54,18 +83,96 @@ const Page = () => {
     allfetching();
   }, []);
 
+  const renderCell = React.useCallback((user, columnKey) => {
+    const cellValue = user[columnKey];
+
+    switch (columnKey) {
+      case "name":
+      case "_id":
+      case "amount":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue}</p>
+          </div>
+        );
+      case "team":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue?.name}</p>
+          </div>
+        );
+      case "department":
+        return (
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue?.name}</p>
+          </div>
+        );
+      case "status":
+        return (
+          <Chip
+            className="capitalize"
+            color={statusColorMap[user.status]}
+            size="sm"
+            variant="flat"
+          >
+            {cellValue}
+          </Chip>
+        );
+      case "actions":
+        return (
+          <div className="relative flex items-center gap-2">
+            <Tooltip color="success" content="Approve Request">
+              <span
+                // onClick={() => teamUnban(user._id)}
+                className="text-lg text-default-400 bg-green-600 hover:bg-green-700 focus:bg-green-800 py-2 px-4 cursor-pointer active:opacity-50"
+              >
+                <TiTick className="bg-transparent text-white" />
+              </span>
+            </Tooltip>
+            <Tooltip color="danger" content="Decline Request">
+              <span
+                // onClick={() => teamBan(user._id)}
+                className="text-lg text-danger bg-red-600 hover:bg-red-700 focus:bg-red-800 py-2 px-4  cursor-pointer active:opacity-50"
+              >
+                <FaBan className="text-white bg-transparent" />
+              </span>
+            </Tooltip>
+            <Tooltip color="danger" content="Show Request">
+              <span
+                // onClick={() => teamBan(user._id)}
+                className="text-lg text-danger bg-orange-600 hover:bg-orange-700 focus:bg-orange-800 py-2 px-4  cursor-pointer active:opacity-50"
+              >
+                <FaEye className="text-white bg-transparent" />
+              </span>
+            </Tooltip>
+          </div>
+        );
+      default:
+        return cellValue;
+    }
+  }, []);
   return (
     <div className="p-8 flex flex-col gap-4">
       <div className="text-center text-3xl md:text-5xl font-semibold">
         <p>Requests</p>
       </div>
       <div className="flex items-center flex-col justify-center gap-3 pb-[8rem] md:pb-0">
-        {logs?.map((log, index) => (
-          <Log key={index} ind={index} data={log} />
-        ))}
-        {(logs || (logs && logs.length===0 ) ) && (
-          <p>No requests found</p>
-        )}
+        <Table aria-label="user table" className="bg-[#202020] rounded-lg">
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn key={column.uid}>{column.name}</TableColumn>
+            )}
+          </TableHeader>
+          <TableBody items={requests}>
+            {(item) => (
+              <TableRow key={item._id}>
+                {(columnKey) => (
+                  <TableCell>{renderCell(item, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

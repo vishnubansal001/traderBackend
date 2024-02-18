@@ -3,9 +3,11 @@
 import SideBar from "../../Components/admin/AdminSideBar";
 
 export default function Layout({ children }) {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    window.location.href = "/login";
+  if (typeof window !== "undefined" && window.localStorage) {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/login";
+    }
   }
   return (
     <>

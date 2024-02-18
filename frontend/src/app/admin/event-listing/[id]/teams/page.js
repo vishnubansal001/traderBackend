@@ -14,12 +14,10 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import useSWR from "swr";
-import { FaBan } from "react-icons/fa";
+import { FaBan, FaPlus } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
 import { TiTick } from "react-icons/ti";
 import { useParams } from "next/navigation";
-
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const columns = [
   { name: "Sr No.", uid: "_id" },
@@ -111,6 +109,14 @@ const Page = () => {
                 className="text-lg text-danger bg-red-600 hover:bg-red-700 focus:bg-red-800 py-2 px-4  cursor-pointer active:opacity-50"
               >
                 <FaBan className="text-white bg-transparent" />
+              </span>
+            </Tooltip>
+            <Tooltip color="danger" content="Add Transaction">
+              <span
+                // onClick={() => teamBan(user._id)}
+                className="text-lg text-danger bg-orange-600 hover:bg-orange-700 focus:bg-orange-800 py-2 px-4  cursor-pointer active:opacity-50"
+              >
+                <FaPlus className="text-white bg-transparent" />
               </span>
             </Tooltip>
           </div>
