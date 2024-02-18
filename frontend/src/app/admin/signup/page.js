@@ -2,12 +2,13 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import login from "../../Assests/login.svg";
-import baseUrl from "@/Constants/baseUrl";
+import login from "../../../Assests/login.svg";
 import axios from "axios";
+import baseUrl from "@/Constants/baseUrl";
 
 const Page = () => {
   const [formdata, setFormdata] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -17,57 +18,60 @@ const Page = () => {
       [e.target.id]: e.target.value,
     }));
   }
+
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formdata);
-      const { data } = await axios.post(`${baseUrl}/auth/login`, formdata);
-      localStorage.setItem("token", data.token);
-      window.location.href = "/admin";
+      const { data } = await axios.post(`${baseUrl}/auth/register`, formdata);
+      window.location.href = "/admin/signup";
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <div className=" md:pt-0 pt-[8rem] w-full md:w-[60%] mx-auto p-8">
-      <div className="flex flex-col items-center w-full">
-        <div className="w-[20rem] h-[20rem]">
-          <Image src={login} alt="login svg" className="w-full h-full" />
+    <div className=" w-[60%] mx-auto p-8">
+      <div className=" flex flex-col items-center">
+        <div className=" w-[50%] h-[40%]">
+          <Image src={login} alt="login svg" />
         </div>
-        <div className="w-[50%] mt-8 gap-4 flex flex-col items-center justify-center">
-          <div className="w-full">
-            <div>
-              <label htmlFor="email">Email: </label>
-            </div>
+        <div className="w-[50%] mt-8 space-y-5">
+          <div>
+            <input
+              className="bg-white outline-orange-500 text-black px-3 w-full py-3"
+              placeholder="Name"
+              type="text"
+              name="name"
+              id="name"
+              onChange={onChange}
+            />
+          </div>
+          <div>
             <input
               className="bg-white outline-orange-500 text-black px-3 w-full py-3"
               placeholder="email"
-              type="text"
+              type="email"
               name="email"
               id="email"
               onChange={onChange}
             />
           </div>
-          <div className="w-full">
-            <div>
-              <label htmlFor="Password">Password: </label>
-            </div>
+          <div>
             <input
               className="bg-white outline-orange-500 text-black px-3 w-full py-3"
-              placeholder="Password"
               type="password"
+              placeholder="Password"
               name="password"
               id="password"
               onChange={onChange}
             />
           </div>
-          <div className="w-full">
+          <div>
             <button
               type="submit"
               onClick={onSubmit}
-              className="bg-orange-600 hover:bg-orange-700 focus:bg-orange-800 py-3 mt-2 w-full"
+              className="bg-green-600 hover:bg-green-700 focus:bg-green-800 py-3  w-full"
             >
-              Login
+              Sign Up
             </button>
           </div>
         </div>

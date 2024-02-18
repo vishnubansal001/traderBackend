@@ -4,12 +4,15 @@ import React, { useState } from "react";
 import Image from "next/image";
 import login from "../../Assests/login.svg";
 import axios from "axios";
+import baseUrl from "@/Constants/baseUrl";
+import toast from "react-hot-toast";
 
 const Page = () => {
   const [formdata, setFormdata] = useState({
     name: "",
     email: "",
     password: "",
+    token: "",
   });
   function onChange(e) {
     setFormdata((prev) => ({
@@ -21,24 +24,38 @@ const Page = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        "http://localhost:4545/auth/register",
+      if (
+        !localStorage.getItem("token") &&
+        localStorage.getItem("user").isTeamLead === false
+      ) {
+        return;
+      }
+
+      const event = JSON.parse(localStorage.getItem("events"));
+
+      formdata.token = localStorage.getItem("token");
+      console.log(formdata, event[0]._id);
+      const data = await axios.post(
+        `${baseUrl}/auth/${event[0]._id}/add-user`,
         formdata
       );
-      localStorage.setItem("token", data.token);
-      window.location.href = "/dashboard";
+      console.log(data);
+      setFormdata({});
+      toast.success("Member added successfully");
+      window.location.reload();
     } catch (error) {
+      toast.error(error);
       console.log(error);
     }
   };
   return (
-    <div className=" w-[60%] mx-auto p-8">
-      <div className=" flex flex-col items-center">
-        <div className=" w-[50%] h-[40%]">
+    <div className=" md:pt-0 pt-[8rem] w-full md:w-[60%] mx-auto p-8 ">
+      <div className="gap-3 flex flex-col items-center">
+        <div className="w-[50%] h-[40%]">
           <Image src={login} alt="login svg" />
         </div>
-        <div className="w-[50%] mt-8 space-y-5">
-          <div>
+        <div className="w-[80%] max-w-3xl flex items-center pb-[8rem] justify-center gap-3 flex-col">
+          <div className="w-full flex items-center justify-center">
             <input
               className="bg-white outline-orange-500 text-black px-3 w-full py-3"
               placeholder="Name"
@@ -48,7 +65,7 @@ const Page = () => {
               onChange={onChange}
             />
           </div>
-          <div>
+          <div className="w-full flex items-center justify-center">
             <input
               className="bg-white outline-orange-500 text-black px-3 w-full py-3"
               placeholder="email"
@@ -58,7 +75,7 @@ const Page = () => {
               onChange={onChange}
             />
           </div>
-          <div>
+          <div className="w-full flex items-center justify-center">
             <input
               className="bg-white outline-orange-500 text-black px-3 w-full py-3"
               type="password"
@@ -68,11 +85,11 @@ const Page = () => {
               onChange={onChange}
             />
           </div>
-          <div>
+          <div className="w-full flex items-center justify-center">
             <button
               type="submit"
               onClick={onSubmit}
-              className="bg-green-600 hover:bg-green-700 focus:bg-green-800 py-3  w-full"
+              className="bg-green-600 hover:bg-green-700 focus:bg-green-800 py-3 w-full"
             >
               Sign Up
             </button>

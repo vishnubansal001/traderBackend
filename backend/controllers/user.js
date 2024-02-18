@@ -134,6 +134,7 @@ exports.eventLogin = async (req, res) => {
   try {
     const id = req.params.id;
     const event = await Event.findById(id);
+
     if (!event) {
       return res.status(400).json({ message: "Invalid event" });
     }
@@ -144,6 +145,7 @@ exports.eventLogin = async (req, res) => {
         .json({ message: "Email and password are required" });
     }
     const user = await User.findOne({ email });
+
     if (!user) {
       return res.status(400).json({ message: "Invalid email" });
     }
@@ -220,10 +222,11 @@ exports.about = async (req, res) => {
       return res.status(401).json({ message: "Unauthorized" });
     }
     if (user.role === "user") {
-      const user = await User.findById(decoded.id).populate("teamMembers").populate("teamId");
+      const user = await User.findById(decoded.id)
+        .populate("teamMembers")
+        .populate("teamId");
       res.status(200).json({ user });
-    }
-    else{
+    } else {
       res.status(200).json({ user });
     }
   } catch (error) {

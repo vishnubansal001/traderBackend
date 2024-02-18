@@ -10,7 +10,6 @@ const { generateRandomPassword, deleteFile } = require("../utils/helper");
 exports.createEvent = async (req, res) => {
   try {
     const { title, description, date, teamSize } = req.body;
-    console.log(req.body);
     if (!title || !description || !date || !teamSize) {
       return res.status(400).json({
         message: "Title, description, date, teamSize are required",
@@ -20,7 +19,6 @@ exports.createEvent = async (req, res) => {
     if (!file) {
       return res.status(400).json({ message: "Poster is required" });
     }
-    console.log(file);
     const re = await cloudinary.uploader.upload(file.path);
     const event = await Event.create({
       title,
@@ -116,6 +114,7 @@ exports.deleteEvent = async (req, res) => {
   try {
     const { id } = req.params;
     const event = await Event.findById(id);
+
     if (!event) {
       return res.status(400).json({ message: "Invalid event" });
     }
@@ -412,7 +411,7 @@ exports.addTeams = async (req, res) => {
       await team.save();
       user.teamId = team._id;
       await user.save();
-      result.push({ user, team });
+      result.unshift({ user, team });
     }
     deleteFile(file.path);
     res.status(201).json({ message: "Teams added", teams: result });
@@ -431,15 +430,16 @@ exports.history = async (req, res) => {
     }
     if (user.role === "user") {
       const user = await User.findById(decoded.id);
-      const history = await Team.findById(user.teamId).populate("history").populate("requests").populate(
-        {
+      const history = await Team.findById(user.teamId)
+        .populate("history")
+        .populate("requests")
+        .populate({
           path: "requests",
           populate: {
             path: "department",
             model: "Department",
           },
-        }
-      );
+        });
       // console.log(history);
       res.status(200).json({ history });
     } else {

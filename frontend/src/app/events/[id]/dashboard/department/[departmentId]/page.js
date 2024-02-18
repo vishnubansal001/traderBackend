@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
+import baseUrl from "@/Constants/baseUrl";
 
 const Page = () => {
   const router = useRouter();
@@ -29,7 +30,7 @@ const Page = () => {
     const token = localStorage.getItem("token");
     if (!token) return;
     axios
-      .post(`http://localhost:4545/request`, {
+      .post(`${baseUrl}/request`, {
         subject,
         amount: quantity,
         reason,
@@ -45,7 +46,7 @@ const Page = () => {
       });
   }
   return (
-    <div className="w-[60%] mx-auto p-8">
+    <div className="md:pt-8 pt-[8rem] w-full md:w-[60%] mx-auto p-8">
       <div>
         <div className="w-full flex justify-center text-5xl font-bold">
           <div>
