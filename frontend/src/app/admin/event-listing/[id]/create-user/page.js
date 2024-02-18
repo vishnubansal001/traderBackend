@@ -120,7 +120,7 @@ const Page = () => {
               accept=".csv"
               name="name"
               id="name"
-              className="bg-white w-full text-black py-2 px-3 w-64"
+              className="bg-white text-black py-2 px-3 w-64"
               placeholder="Upload CSV File"
               onChange={onChange}
             />

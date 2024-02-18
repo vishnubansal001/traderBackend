@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import login from "../../../Assests/login.svg";
+import login from "@/Assests/login.svg";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
 
