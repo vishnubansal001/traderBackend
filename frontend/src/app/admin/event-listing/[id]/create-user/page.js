@@ -8,119 +8,56 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Pagination,
   Chip,
   Tooltip,
 } from "@nextui-org/react";
-import useSWR from "swr";
 import { FaEye } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
-
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+import baseUrl from "@/Constants/baseUrl";
+import axios from "axios";
+import { useParams } from "next/navigation";
 
 const columns = [
-  { name: "NAME", uid: "name" },
-  { name: "ROLE", uid: "role" },
-  { name: "STATUS", uid: "status" },
-  { name: "ACTIONS", uid: "actions" },
+  { name: "Name", uid: "name" },
+  { name: "Password", uid: "password" },
+  { name: "Email", uid: "email" },
+  { name: "Actions", uid: "actions" },
 ];
-
-const users = [
-  {
-    id: 1,
-    name: "Tony Reichert",
-    role: "CEO",
-    team: "Management",
-    status: "active",
-    age: "29",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    email: "tony.reichert@example.com",
-  },
-  {
-    id: 2,
-    name: "Zoey Lang",
-    role: "Technical Lead",
-    team: "Development",
-    status: "paused",
-    age: "25",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    email: "zoey.lang@example.com",
-  },
-  {
-    id: 3,
-    name: "Jane Fisher",
-    role: "Senior Developer",
-    team: "Development",
-    status: "active",
-    age: "22",
-    avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    email: "jane.fisher@example.com",
-  },
-  {
-    id: 4,
-    name: "William Howard",
-    role: "Community Manager",
-    team: "Marketing",
-    status: "vacation",
-    age: "28",
-    avatar: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    email: "william.howard@example.com",
-  },
-  {
-    id: 5,
-    name: "Kristen Copper",
-    role: "Sales Manager",
-    team: "Sales",
-    status: "active",
-    age: "24",
-    avatar: "https://i.pravatar.cc/150?u=a092581d4ef9026700d",
-    email: "kristen.cooper@example.com",
-  },
-];
-
-const statusColorMap = {
-  active: "success",
-  paused: "danger",
-  vacation: "warning",
-};
 
 const Page = () => {
+  const { id } = useParams();
   const [formdata, setFormdata] = useState({
     file: {},
+    token: "",
   });
+  const [users, setUsers] = useState([]);
   function onChange(e) {
     if (e.target.files) {
       setFormdata((prev) => ({
         ...prev,
-        file: e.target.files,
+        file: e.target.files[0],
       }));
     }
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
     console.log(formdata);
-  }
-
-  const [page, setPage] = useState(1);
-
-  const { data, isLoading } = useSWR(
-    `https://swapi.py4e.com/api/people?page=${page}`,
-    fetcher,
-    {
-      keepPreviousData: true,
+    const token = localStorage.getItem("token");
+    formdata.token = token;
+    try {
+      const result = await axios.post(`${baseUrl}/event/${id}/team`, formdata, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(result.data.teams);
+      setUsers(result.data.teams.map((item) => item.user));
+    } catch (error) {
+      console.error(error);
     }
-  );
-
-  const rowsPerPage = 10;
-
-  const pages = useMemo(() => {
-    return data?.count ? Math.ceil(data.count / rowsPerPage) : 0;
-  }, [data?.count, rowsPerPage]);
-
-  const loadingState =
-    isLoading || data?.results.length === 0 ? "loading" : "idle";
+  }
 
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
@@ -132,22 +69,17 @@ const Page = () => {
             <p className="text-bold text-sm capitalize">{cellValue}</p>
           </div>
         );
-      case "role":
+      case "password":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">{cellValue}</p>
           </div>
         );
-      case "status":
+      case "email":
         return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap[user.status]}
-            size="sm"
-            variant="flat"
-          >
-            {cellValue}
-          </Chip>
+          <div className="flex flex-col">
+            <p className="text-bold text-sm capitalize">{cellValue}</p>
+          </div>
         );
       case "actions":
         return (
@@ -206,27 +138,24 @@ const Page = () => {
         </div>
       </div>
       <div className="flex items-center justify-center w-full max-w-5xl">
-        <Table aria-label="user table" className="bg-[#202020] rounded-lg">
-          <TableHeader columns={columns}>
-            {(column) => (
-              <TableColumn
-                key={column.uid}
-                align={column.uid === "actions" ? "center" : "start"}
-              >
-                {column.name}
-              </TableColumn>
-            )}
-          </TableHeader>
-          <TableBody items={users}>
-            {(item) => (
-              <TableRow key={item.id}>
-                {(columnKey) => (
-                  <TableCell>{renderCell(item, columnKey)}</TableCell>
-                )}
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+        {users && (
+          <Table aria-label="user table" className="bg-[#202020] rounded-lg">
+            <TableHeader columns={columns}>
+              {(column) => (
+                <TableColumn key={column.uid}>{column.name}</TableColumn>
+              )}
+            </TableHeader>
+            <TableBody items={users}>
+              {(item) => (
+                <TableRow key={item._id}>
+                  {(columnKey) => (
+                    <TableCell>{renderCell(item, columnKey)}</TableCell>
+                  )}
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        )}
       </div>
     </div>
   );

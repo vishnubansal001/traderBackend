@@ -7,7 +7,6 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  background-color: rgb(20, 20, 20);
 }
 body {
   color: white;
@@ -46,4 +45,3 @@ html,
 .bg-content1 {
   background-color: transparent;
 }
-

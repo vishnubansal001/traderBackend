@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import testing from "../Assests/testing.jpeg";
 import { useRouter } from "next/navigation";
 
 const EventsCard = ({ event }) => {

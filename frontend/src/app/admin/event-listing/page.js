@@ -46,7 +46,7 @@ const Card = ({ data }) => {
                   router.push(`/admin/event-listing/${data._id}`);
                 }}
               >
-                View Event
+                Create Dept.
               </button>
             </div>
           </div>

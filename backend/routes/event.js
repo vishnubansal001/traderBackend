@@ -56,7 +56,12 @@ eventRouter.put(
   checkMasterAdmin,
   updateDepartment
 ); // done
-eventRouter.post("/:id/team", uploadCsv, checkMasterAdmin, addTeams); // done
+eventRouter.post(
+  "/:id/team",
+  uploadCsv.single("file"),
+  checkMasterAdmin,
+  addTeams
+); // done
 eventRouter.post("/:id/teams", checkMasterAdmin, getTeams); // done
 eventRouter.post("/:id/team/:teamId", checkMasterAdmin, getTeam); // done
 eventRouter.delete("/:id/team/:teamId", checkMasterAdmin, deleteTeam); // done

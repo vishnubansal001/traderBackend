@@ -411,7 +411,7 @@ exports.addTeams = async (req, res) => {
       await team.save();
       user.teamId = team._id;
       await user.save();
-      result.push({ user, team });
+      result.unshift({ user, team });
     }
     deleteFile(file.path);
     res.status(201).json({ message: "Teams added", teams: result });

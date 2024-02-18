@@ -10,13 +10,6 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({
-  storage: storage,
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb);
-  },
-}).single("teams");
-
 function checkFileType(file, cb) {
   const filetypes = /csv/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
@@ -29,7 +22,12 @@ function checkFileType(file, cb) {
   }
 }
 
-exports.uploadCsv = upload;
+exports.uploadCsv = multer({
+  storage: storage,
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  },
+});
 
 const imageFileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image/")) {

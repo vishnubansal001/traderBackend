@@ -6,24 +6,19 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 
 const Card = ({ data }) => {
-  const { id } = useParams();
-  const router = useRouter();
   const [departmentHead, setDepartmentHead] = useState();
   useEffect(() => {
     async function fetchUserName() {
       const departmentAdmin = await axios.get(
         `${baseUrl}/admin/users/${data.departmentHead}`
       );
-      setDepartmentHead(departmentAdmin.data.user);
+      setDepartmentHead(() => departmentAdmin.data.user);
     }
     fetchUserName();
   }, [data]);
-  console.log(data);
+
   return (
-    <div
-      className="relative group bg-back noise-panel rounded-sm shadow-lg drop-shadow-sm border-[1px] border-[#222222] py-4 w-96 p-5 gap-2  hover:border-orange-500"
-      onClick={() => router.push(`/admin/event-listing/${id}/${data._id}`)}
-    >
+    <div className="relative group bg-back noise-panel rounded-sm shadow-lg drop-shadow-sm border-[1px] border-[#222222] py-4 w-96 p-5 gap-2  hover:border-orange-500">
       <div className="flex gap-2 bg-transparent w-full">
         <div className="w-full  bg-transparent">
           <p className=" bg-transparent lg:text-base sm:text-sm text-xs">
@@ -65,6 +60,24 @@ const Card = ({ data }) => {
 };
 
 const Page = () => {
+  const [executives, setExecutives] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [executivesResponse] = await Promise.all([
+          axios.get(`${baseUrl}/admin/executives`),
+        ]);
+
+        setExecutives(executivesResponse.data.executives);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    if (typeof window !== "undefined") {
+      fetchData();
+    }
+  }, []);
   const [departments, setDepartments] = useState();
   const { id } = useParams();
   useEffect(() => {
@@ -91,12 +104,11 @@ const Page = () => {
 
   async function onSubmit(e) {
     e.preventDefault();
-    const { id } = router.query;
     const token = localStorage.getItem("token");
     formData.token = token;
     try {
       const department = await axios.post(
-        `${baseUrl}/events/${id}/department`,
+        `${baseUrl}/event/${id}/department`,
         formData
       );
       console.log(department);
@@ -132,10 +144,10 @@ const Page = () => {
           />
         </div>
         <div>
-          <label htmlFor="name">Department Description</label>
+          <label htmlFor="name">Department Admin</label>
         </div>
         <div>
-          <input
+          <select
             type="text"
             name="executiveId"
             id="executiveId"
@@ -143,10 +155,19 @@ const Page = () => {
             placeholder="Enter executiveId"
             className="bg-white text-black py-2 px-3 w-72"
             onChange={onChange}
-          />
+          >
+            <option value="" disabled>
+              Select Admin
+            </option>
+            {executives.map((item) => (
+              <option key={item._id} value={item._id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-          <label htmlFor="name">Department Name</label>
+          <label htmlFor="name">Department Descrption</label>
         </div>
         <div>
           <input
