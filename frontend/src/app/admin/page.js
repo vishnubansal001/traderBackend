@@ -1,23 +1,25 @@
+"use client";
+
+import Table from "@/Components/admin/Table";
 import React from "react";
+import axios from "axios";
 
 const Page = () => {
+  const [data,setDate] = React.useState([]);
+  React.useEffect(() => {
+    axios.get("http://localhost:4545/admin/users").then((res) => {
+      setDate(res.data);
+      console.log(res.data);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, []);
   return (
     <div className="p-8 flex flex-col gap-4">
       <div className="text-5xl font-semibold">
         <p>Admin Users</p>
       </div>
-      <div className="w-full flex justify-between">
-        <div>
-          <p>Username</p>
-        </div>
-        <div>
-          <p>Role</p>
-        </div>
-        <div>
-          <p>Department</p>
-        </div>
-      </div>
-      <div className="w-full flex justify-between">
+      {/* <div className="w-full flex justify-between">
         <div>
           <p>Username</p>
         </div>
@@ -49,7 +51,8 @@ const Page = () => {
             </option>
           </select>
         </div>
-      </div>
+      </div> */}
+      <Table data={data} />
     </div>
   );
 };
