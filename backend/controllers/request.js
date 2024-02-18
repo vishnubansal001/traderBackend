@@ -148,13 +148,34 @@ exports.showRequestsTeam = async (req, res) => {
 
 exports.showRequests = async (req, res) => {
   try {
-    const { jwt } = req.body;
-    const decoded = jwt.verify(jwt, process.env.JWT_SECRET);
+    const { token } = req.body;
+    const id = req.params.id;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
     if (!user) return res.status(401).json({ message: "Unauthorized" });
-    const teamId = user.teamId;
-    const requests = await Request.find({ team: teamId });
-    return res.status(200).json(requests);
+    if (user.role === "masterAdmin" || user.role === "juniorAdmin") {
+      // console.log("showRequests");
+      const requests = await Request.find({ event: id })
+        .populate("team")
+        .populate("department");
+      // console.log(requests);
+      return res.status(200).json({ requests: requests });
+    } else if (user.isTeamLead || user.role === "user") {
+      const teamId = user.teamId;
+      if (!teamId) return res.status(400).json({ message: "Team not found" });
+      const requests = await Request.find({ team: teamId })
+        .populate("team")
+        .populate("department");
+      return res.status(200).json({ requests: requests });
+    } else if (user.role === "executiveAdmin") {
+      const departmentId = user.departmentId;
+      if (!departmentId)
+        return res.status(400).json({ message: "Department not found" });
+      const requests = await Request.find({ department: departmentId })
+        .populate("team")
+        .populate("department");
+      return res.status(200).json({ requests: requests });
+    }
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

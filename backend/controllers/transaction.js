@@ -68,7 +68,7 @@ exports.getTransactions = async (req, res) => {
   try {
     const { id } = req.params;
     if (!id) {
-      return res.status(400).json({ message: "Team ID is required" });
+      return res.status(400).json({ message: "ID is required" });
     }
     const transactions = await Transaction.find({ eventId: id });
     if (!transactions) {

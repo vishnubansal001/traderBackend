@@ -16,15 +16,17 @@ const AdminSideBar = () => {
     admin: pathfinal == "admin" ? true : false,
     "create-event": pathfinal == "admin/create-event" ? true : false,
     "event-listing": pathfinal == "admin/event-listing" ? true : false,
-    history: pathfinal == "admin/history" ? true : false,
+    // requests: pathfinal == "admin/request" ? true : false,
+    // history: pathfinal == "admin/history" ? true : false,
     settings: pathfinal == "settings" ? true : false,
   });
   function onSet(id) {
     const updatedSelected = {
       admin: false,
+      // requests: false,
       "create-event": false,
       "event-listing": false,
-      history: false,
+      // history: false,
       settings: false,
     };
     updatedSelected[id] = true;
@@ -83,7 +85,21 @@ const AdminSideBar = () => {
             <p>Event Listing</p>
           </div>
         </div>
-        <div
+        {/* <div
+          className={`w-full justify-center cursor-pointer flex items-center p-2 md:px-5 md:py-3 rounded-lg gap-2 ${
+            clicked.requests && "border border-orange-500"
+          }`}
+          onClick={() => {
+            onSet("requests");
+            router.push("/admin/request");
+          }}
+        >
+          <TbHistory className="w-4 h-4 lg:w-6 lg:h-6" />
+          <div className="lg:flex hidden w-full items-center">
+            <p>Requests</p>
+          </div>
+        </div> */}
+        {/* <div
           className={`w-full justify-center cursor-pointer flex items-center p-2 md:px-5 md:py-3 rounded-lg gap-2 ${
             clicked.history && "border border-orange-500"
           }`}
@@ -96,7 +112,7 @@ const AdminSideBar = () => {
           <div className="lg:flex hidden w-full items-center">
             <p>History</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

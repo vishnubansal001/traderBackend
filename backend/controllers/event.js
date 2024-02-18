@@ -118,6 +118,9 @@ exports.deleteEvent = async (req, res) => {
     if (!event) {
       return res.status(400).json({ message: "Invalid event" });
     }
+    await User.deleteMany({ eventId: id });
+    await Team.deleteMany({ eventId: id });
+    await Department.deleteMany({ eventId: id });
     await Event.findByIdAndDelete(id);
     res.status(200).json({ message: "Event deleted" });
   } catch (error) {

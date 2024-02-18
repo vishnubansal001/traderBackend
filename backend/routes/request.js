@@ -27,6 +27,6 @@ requestRouter.get("/:id/:requestId", showRequest); // done
 requestRouter.get("/:id/department/:departmentId", showRequestsDep); // done
 requestRouter.post("/:id/team/:teamId", showRequestsTeam); // done
 requestRouter.post("/:id/team", showRequestsTeam); // done
-requestRouter.get("/:id", showRequests); // done
+requestRouter.post("/:id", showRequests); // done
 
 module.exports = requestRouter;

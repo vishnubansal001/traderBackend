@@ -22,7 +22,6 @@ const columns = [
   { name: "Name", uid: "name" },
   { name: "Password", uid: "password" },
   { name: "Email", uid: "email" },
-  { name: "Actions", uid: "actions" },
 ];
 
 const Page = () => {

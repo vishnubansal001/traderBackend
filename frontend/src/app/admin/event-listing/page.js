@@ -73,6 +73,30 @@ const Card = ({ data }) => {
           >
             Create Users
           </button>
+          <button
+            className="w-full py-2 bg-green-600 hover:bg-green-700 focus:bg-green-800"
+            onClick={() => {
+              router.push(`/admin/event-listing/${data._id}/teams`);
+            }}
+          >
+            See Teams
+          </button>
+          <button
+            className="w-full py-2 bg-green-600 hover:bg-green-700 focus:bg-green-800"
+            onClick={() => {
+              router.push(`/admin/event-listing/${data._id}/history`);
+            }}
+          >
+            history
+          </button>
+          <button
+            className="w-full py-2 bg-green-600 hover:bg-green-700 focus:bg-green-800"
+            onClick={() => {
+              router.push(`/admin/event-listing/${data._id}/request`);
+            }}
+          >
+            requests
+          </button>
           <div className="w-full flex justify-center bg-red-500 text-white hover:bg-transparent hover:border-t hover:border-orange-500 hover:text-red-500">
             <button>
               <MdDelete

@@ -1,7 +1,9 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
+import { useParams } from "next/navigation";
 
 const Log = ({ ind, data }) => {
   const dateTime = data.createdAt.split(/[T.]/);
@@ -30,23 +32,20 @@ const Log = ({ ind, data }) => {
 };
 
 const Page = () => {
+  const params = useParams();
   const [logs, setLogs] = useState([]);
+  const { id } = params;
 
   useEffect(() => {
     async function allfetching() {
       if (typeof window !== "undefined") {
         try {
           const token = localStorage.getItem("token");
-          const { data } = await axios.get(`${baseUrl}/event`);
-          const eventId = data.events.length > 0 ? data.events[0]._id : null;
-          if (eventId) {
-            const response = await axios.post(
-              `${baseUrl}/transaction/${eventId}`,
-              { token: token }
-            );
-            const { transactions } = response.data;
-            setLogs(transactions);
-          }
+          const res = await axios.post(`${baseUrl}/request/${id}`, {
+            token,
+          });
+          console.log(res);
+          setLogs(res?.data?.requests);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -61,9 +60,12 @@ const Page = () => {
         <p>Requests</p>
       </div>
       <div className="flex items-center flex-col justify-center gap-3 pb-[8rem] md:pb-0">
-        {logs.map((log, index) => (
+        {logs?.map((log, index) => (
           <Log key={index} ind={index} data={log} />
         ))}
+        {(logs || (logs && logs.length===0 ) ) && (
+          <p>No requests found</p>
+        )}
       </div>
     </div>
   );

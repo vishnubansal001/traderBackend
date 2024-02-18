@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import Card from "../../Components/CardComponent";
-import Card2 from "../../Components/Cardsforother";
+import Card from "@/Components/CardComponent";
+import Card2 from "@/Components/Cardsforother";
 import Activitycomp from "@/Components/Activitycomp";
 import axios from "axios";
 import Activitycomp1 from "@/Components/Activitycomp1";

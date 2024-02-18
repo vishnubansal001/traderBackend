@@ -3,8 +3,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
+import { useRouter } from "next/navigation";
+
 
 const Page = () => {
+  const router = useRouter();
   const [formdata, setFormdata] = useState({
     title: "",
     description: "",
@@ -72,7 +75,10 @@ const Page = () => {
             token: "",
           });
         });
-      toast.success("Event Created", response);
+        console.log(response);
+      router.push("/admin/add-team");
+
+      // toast.success("Event Created", response);
     } catch (error) {
       console.log(error);
     }

@@ -6,6 +6,7 @@ const {
   deleteTransaction,
   getTeamTransactions,
   deleteTeamTransactions,
+  getAllTransactions,
 } = require("../controllers/transaction");
 const checkMasterAdmin = require("../middlewares/admin");
 const transactionRouter = express.Router();
