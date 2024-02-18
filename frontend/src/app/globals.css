@@ -7,10 +7,10 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  background-color: rgb(20, 20, 20);
 }
 body {
   color: white;
+  background-color: rgb(20, 20, 20);
   font-family: Urbanist, sans-serif;
 }
 
@@ -39,9 +39,9 @@ html,
 
 .back {
   color: white;
-  transform: rotateY( 180deg );
+  transform: rotateY(180deg);
 }
 
-/* div{
-  border: 1px solid red;
-} */
+.bg-content1 {
+  background-color: transparent;
+}

@@ -58,7 +58,7 @@ const Page = () => {
   return (
     <div className="p-8 flex flex-col gap-4">
       <div className="text-center text-3xl md:text-5xl font-semibold">
-        <p>History</p>
+        <p>Requests</p>
       </div>
       <div className="flex items-center flex-col justify-center gap-3 pb-[8rem] md:pb-0">
         {logs.map((log, index) => (

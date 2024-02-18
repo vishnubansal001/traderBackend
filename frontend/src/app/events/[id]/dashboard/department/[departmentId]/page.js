@@ -46,7 +46,7 @@ const Page = () => {
       });
   }
   return (
-    <div className="w-[60%] mx-auto p-8">
+    <div className="md:pt-8 pt-[8rem] w-full md:w-[60%] mx-auto p-8">
       <div>
         <div className="w-full flex justify-center text-5xl font-bold">
           <div>

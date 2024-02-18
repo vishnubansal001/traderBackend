@@ -12,12 +12,15 @@ const Page = () => {
     const fetchData = async () => {
       const events = await axios.get(`${baseUrl}/event`);
       console.log(events);
+      if (typeof window !== "undefined" && window.localStorage) {
+        localStorage.setItem("events", JSON.stringify(events.data.events));
+      }
       setEvents(events.data.events);
     };
     fetchData();
   }, []);
   return (
-    <div className=" w-[60%] mx-auto p-8">
+    <div className=" md:pt-0 pt-[8rem] w-full md:w-[60%] mx-auto p-8">
       <div className="">
         {event?.map((event, index) => (
           <EventsCard key={index} event={event} />

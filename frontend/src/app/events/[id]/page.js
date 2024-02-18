@@ -6,6 +6,7 @@ import login from "../../../Assests/login.svg";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
+import baseUrl from "@/Constants/baseUrl";
 
 const Page = () => {
   useEffect(() => {
@@ -46,7 +47,7 @@ const Page = () => {
       });
   }
   return (
-    <div className=" w-[60%] mx-auto p-8">
+    <div className="flex items-center justify-center w-full md:pt-8 pt-[8rem] md:w-[60%] mx-auto p-8">
       <div className="flex flex-col items-center w-full">
         <div className="w-[20rem] h-[20rem]">
           <Image src={login} alt="login svg" className="w-full h-full" />
