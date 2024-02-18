@@ -18,6 +18,7 @@ import { FaBan, FaPlus } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
 import { TiTick } from "react-icons/ti";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const columns = [
   { name: "Sr No.", uid: "_id" },
@@ -32,6 +33,7 @@ const statusColorMap = {
 };
 
 const Page = () => {
+  const router = useRouter();
   const { id } = useParams();
   const [teams, setTeams] = useState([]);
   useEffect(() => {
@@ -113,7 +115,9 @@ const Page = () => {
             </Tooltip>
             <Tooltip color="danger" content="Add Transaction">
               <span
-                // onClick={() => teamBan(user._id)}
+                onClick={() =>
+                  router.push(`/admin/event-listing/${id}/${user._id}`)
+                }
                 className="text-lg text-danger bg-orange-600 hover:bg-orange-700 focus:bg-orange-800 py-2 px-4  cursor-pointer active:opacity-50"
               >
                 <FaPlus className="text-white bg-transparent" />

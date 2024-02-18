@@ -4,10 +4,11 @@ import { useRouter } from "next/navigation";
 
 const Table = ({ data }) => {
   const router = useRouter();
+  const token = localStorage.getItem("token");
   const onClck1 = (id, role) => {
     if (role === "executiveAdmin") {
       axios
-        .post(`http://localhost:4545/admin/remove-admin/${id}`)
+        .post(`http://localhost:4545/admin/remove-admin/${id}`,{token})
         .then((res) => {
           router.refresh();
           console.log(res.data);
@@ -17,7 +18,7 @@ const Table = ({ data }) => {
         });
     } else {
       axios
-        .post(`http://localhost:4545/admin/make-executive-admin/${id}`)
+        .post(`http://localhost:4545/admin/make-executive-admin/${id}`,{token})
         .then((res) => {
           router.refresh();
           console.log(res.data);
@@ -30,7 +31,7 @@ const Table = ({ data }) => {
   const onClck2 = (id, role) => {
     if (role === "juniorAdmin") {
       axios
-        .post(`http://localhost:4545/admin/remove-admin/${id}`)
+        .post(`http://localhost:4545/admin/remove-admin/${id}`, {token})
         .then((res) => {
           router.refresh();
           console.log(res.data);
@@ -40,7 +41,7 @@ const Table = ({ data }) => {
         });
     } else {
       axios
-        .post(`http://localhost:4545/admin/make-junior-admin/${id}`)
+        .post(`http://localhost:4545/admin/make-junior-admin/${id}`, {token})
         .then((res) => {
           router.refresh();
           console.log(res.data);

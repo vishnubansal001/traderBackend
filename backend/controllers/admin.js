@@ -3,6 +3,7 @@ const User = require("../models/User.model");
 
 exports.getAllUsers = async (req, res) => {
   try {
+    // console.log(req.body);
     const token = req.body.token;
     const userId = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(userId.id);

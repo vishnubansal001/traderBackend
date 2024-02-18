@@ -5,14 +5,18 @@ import React from "react";
 import axios from "axios";
 
 const Page = () => {
-  const [data,setDate] = React.useState([]);
+  const [data, setDate] = React.useState([]);
   React.useEffect(() => {
-    axios.get("http://localhost:4545/admin/users").then((res) => {
-      setDate(res.data);
-      console.log(res.data);
-    }).catch((err) => {
-      console.log(err);
-    });
+    const token = localStorage.getItem("token");
+    axios
+      .post("http://localhost:4545/admin/users", { token })
+      .then((res) => {
+        setDate(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
   return (
     <div className="w-full p-8 flex flex-col gap-4">
