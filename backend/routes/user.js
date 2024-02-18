@@ -27,7 +27,7 @@ authRouter.post(
   eventLogin
 ); // done
 authRouter.post(
-  "/:id/add-user",
+  "/add-user",
   validateUser,
   validateFormInputMiddleware,
   addUser

@@ -48,7 +48,7 @@ const columns = [
   { name: "Sr No.", uid: "_id" },
   { name: "Subject", uid: "subject" },
   { name: "Team Name", uid: "team" },
-  { name: "Department ID", uid: "department" },
+  { name: "Department", uid: "department" },
   { name: "Amount", uid: "amount" },
   { name: "Reason", uid: "reason" },
   { name: "Status", uid: "status" },
@@ -82,6 +82,30 @@ const Page = () => {
     }
     allfetching();
   }, []);
+
+  const teamBan = async (d) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.post(`${baseUrl}/request/${id}/decline/${d}`, {
+        token,
+      });
+      console.log(res);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const teamUnban = async (d) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.post(`${baseUrl}/request/${id}/approve/${d}`, {
+        token,
+      });
+      console.log(res);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
@@ -123,7 +147,7 @@ const Page = () => {
           <div className="relative flex items-center gap-2">
             <Tooltip color="success" content="Approve Request">
               <span
-                // onClick={() => teamUnban(user._id)}
+                onClick={() => teamUnban(user._id)}
                 className="text-lg text-default-400 bg-green-600 hover:bg-green-700 focus:bg-green-800 py-2 px-4 cursor-pointer active:opacity-50"
               >
                 <TiTick className="bg-transparent text-white" />
@@ -131,18 +155,10 @@ const Page = () => {
             </Tooltip>
             <Tooltip color="danger" content="Decline Request">
               <span
-                // onClick={() => teamBan(user._id)}
+                onClick={() => teamBan(user._id)}
                 className="text-lg text-danger bg-red-600 hover:bg-red-700 focus:bg-red-800 py-2 px-4  cursor-pointer active:opacity-50"
               >
                 <FaBan className="text-white bg-transparent" />
-              </span>
-            </Tooltip>
-            <Tooltip color="danger" content="Show Request">
-              <span
-                // onClick={() => teamBan(user._id)}
-                className="text-lg text-danger bg-orange-600 hover:bg-orange-700 focus:bg-orange-800 py-2 px-4  cursor-pointer active:opacity-50"
-              >
-                <FaEye className="text-white bg-transparent" />
               </span>
             </Tooltip>
           </div>

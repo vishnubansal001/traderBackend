@@ -25,22 +25,25 @@ const Page = () => {
     e.preventDefault();
     try {
       if (
-        !localStorage.getItem("token") &&
-        localStorage.getItem("user").isTeamLead === false
+        !localStorage.getItem("token")
       ) {
         return;
       }
 
-      const event = JSON.parse(localStorage.getItem("events"));
+      // const event = JSON.parse(localStorage.getItem("events"));
 
       formdata.token = localStorage.getItem("token");
-      console.log(formdata, event[0]._id);
       const data = await axios.post(
-        `${baseUrl}/auth/${event[0]._id}/add-user`,
+        `${baseUrl}/auth/add-user`,
         formdata
       );
       console.log(data);
-      setFormdata({});
+      setFormdata({
+        name: "",
+        email: "",
+        password: "",
+        token: "",
+      });
       toast.success("Member added successfully");
       window.location.reload();
     } catch (error) {

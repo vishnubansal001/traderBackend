@@ -164,10 +164,23 @@ exports.eventLogin = async (req, res) => {
 
 exports.addUser = async (req, res) => {
   try {
-    const id = req.params.id;
-    const event = await Event.findById(id);
+    const {token} = req.body;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    if (user.role !== "user" || !user.isTeamLead) {
+      return res
+        .status(400)
+        .json({ message: "You are not authorized to access this route" });
+    }
+    const event = await Event.findById(user.eventId);
     if (!event) {
-      return res.status(400).json({ message: "Invalid event" });
+      return res.status(400).json({ message: "Event not found" });
+    }
+    if (user.teamMembers.length == event.teamSize) {
+      return res.status(400).json({ message: "Team is full" });
     }
     const { email, password, name } = req.body;
     if (!email || !password || !name) {
@@ -175,33 +188,12 @@ exports.addUser = async (req, res) => {
         .status(400)
         .json({ message: "Email, password, and name are required" });
     }
-    const { token } = req.body;
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.id);
-    if (!user) {
-      return res.status(400).json({ message: "Invalid token" });
-    }
-    if (user.role !== "user") {
-      return res
-        .status(400)
-        .json({ message: "You are not authorized to access this route" });
-    }
-    if (user.eventId.toString() !== id) {
-      return res.status(400).json({ message: "Invalid event" });
-    }
-    if (!user.isTeamLead) {
-      return res
-        .status(400)
-        .json({ message: "You are not authorized to access this route" });
-    }
-    if (user.teamMembers.length == event.teamSize) {
-      return res.status(400).json({ message: "Team is full" });
-    }
+    
     const newUser = await User.create({
       email,
       password,
       name,
-      eventId: id,
+      eventId: user.eventId,
       isTeamLead: false,
     });
     await newUser.save();
