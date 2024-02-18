@@ -45,6 +45,7 @@ const Page = () => {
   async function onSubmit(e) {
     e.preventDefault();
     try {
+      
       const token = localStorage.getItem("token");
       if (!token) {
         console.error("Token not found");
