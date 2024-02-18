@@ -12,10 +12,10 @@ const {
   getAllJuniorAdmins,
 } = require("../controllers/admin");
 
-adminRouter.get("/users", getAllUsers); // done
-adminRouter.get("/users/:id", getUserById); // done
-adminRouter.get("/executives", getAllExecutives); // done
-adminRouter.get("/junior-admins", getAllJuniorAdmins); // done
+adminRouter.post("/users", getAllUsers); // done
+adminRouter.post("/users/:id", getUserById); // done
+adminRouter.post("/executives", getAllExecutives); // done
+adminRouter.post("/junior-admins", getAllJuniorAdmins); // done
 adminRouter.post("/make-junior-admin/:id", makeJuniorAdmin); // done
 adminRouter.post("/make-executive-admin/:id", makeExecutiveAdmin); // done
 adminRouter.post("/remove-admin/:id", removeAdmin); // done
