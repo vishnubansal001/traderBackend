@@ -4,11 +4,26 @@ import { usePathname } from "next/navigation";
 import Sidebar from "../Components/SideNavigationBar";
 import Profile from "../Components/Profile";
 import { NextUIProvider } from "@nextui-org/react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LayoutProvider = ({ children }) => {
   const pathname = usePathname();
   return (
     <NextUIProvider>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+
+      />
       {pathname == "/admin" || pathname.match(/^\/admin\//) ? (
         <>{children}</>
       ) : (

@@ -3,6 +3,7 @@ import Table from "@/Components/admin/Table";
 import React from "react";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
+import { toast } from "react-toastify"
 
 const Page = () => {
   const [data, setDate] = React.useState([]);
@@ -17,6 +18,7 @@ const Page = () => {
         })
         .catch((err) => {
           console.log(err);
+          toast.error("User fetch failed");
         });
     }
   }, []);

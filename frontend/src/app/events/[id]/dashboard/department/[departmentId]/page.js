@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
+import { toast } from "react-toastify"
 
 const Page = () => {
   const router = useRouter();
@@ -38,10 +39,12 @@ const Page = () => {
         token,
       })
       .then((res) => {
+        toast.success("request submitted successfully");
         router.push(`/history`);
       })
       .catch((err) => {
         console.log(err);
+        toast.error("request unsucessful try again");
         router.push(`/events/${id}/dashboard`);
       });
   }

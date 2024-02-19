@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify"
 
 
 const Page = () => {
@@ -78,9 +79,9 @@ const Page = () => {
         });
         console.log(response);
       router.push("/admin/add-team");
-
-      // toast.success("Event Created", response);
+      toast.success("Event Created");
     } catch (error) {
+      toast.error("Event Creation Failed")
       console.log(error);
     }
   }

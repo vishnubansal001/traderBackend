@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import emailjs from "@emailjs/browser";
+import { toast } from "react-toastify"
 
 const Page = () => {
   const form = useRef();
@@ -16,10 +17,12 @@ const Page = () => {
       .then(
         () => {
           console.log("SUCCESS!");
+          toast.success("email sent successfully")
           form.current.reset();
         },
         (error) => {
           console.log("FAILED...", error.text);
+          toast.error("something went wrong");
         }
       );
   };

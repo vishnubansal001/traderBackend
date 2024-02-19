@@ -5,6 +5,7 @@ import Image from "next/image";
 import login from "../../Assests/login.svg";
 import baseUrl from "@/Constants/baseUrl";
 import axios from "axios";
+import { toast } from "react-toastify"
 
 const Page = () => {
   const [formdata, setFormdata] = useState({
@@ -23,9 +24,11 @@ const Page = () => {
       console.log(formdata);
       const { data } = await axios.post(`${baseUrl}/auth/login`, formdata);
       localStorage.setItem("token", data.token);
+      toast.success("user login successfully");
       window.location.href = "/admin";
     } catch (error) {
       console.log(error);
+      toast.error("something went wrong");
     }
   };
   return (

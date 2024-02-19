@@ -5,6 +5,7 @@ import Image from "next/image";
 import login from "@/Assests/login.svg";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
+import { toast } from "react-toastify"
 
 const Page = () => {
   const [formdata, setFormdata] = useState({
@@ -23,9 +24,15 @@ const Page = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(`${baseUrl}/auth/register`, formdata);
-      window.location.href = "/admin/signup";
+      setFormdata({
+        name: "",
+        email: "",
+        password: "",
+      })
+      toast.success("user registered successfully");
     } catch (error) {
       console.log(error);
+      toast.error("something went wrong");
     }
   };
   return (

@@ -5,7 +5,7 @@ import Image from "next/image";
 import login from "../../../Assests/login.svg";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify"
 import baseUrl from "@/Constants/baseUrl";
 
 const Page = () => {

@@ -17,6 +17,7 @@ import { MdDelete } from "react-icons/md";
 import baseUrl from "@/Constants/baseUrl";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import { toast } from "react-toastify"
 
 const columns = [
   { name: "Name", uid: "name" },
@@ -53,8 +54,10 @@ const Page = () => {
       });
       console.log(result.data.teams);
       setUsers(result.data.teams.map((item) => item.user));
+      toast.successs("Team Lead Created")
     } catch (error) {
       console.error(error);
+      toast.error("Request Unseccessful");
     }
   }
 

@@ -5,7 +5,7 @@ import Image from "next/image";
 import login from "../../Assests/login.svg";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
-import toast from "react-hot-toast";
+import { toast } from "react-toastify"
 
 const Page = () => {
   const [formdata, setFormdata] = useState({

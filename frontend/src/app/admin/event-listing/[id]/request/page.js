@@ -17,6 +17,7 @@ import {
 } from "@nextui-org/react";
 import { FaBan, FaEye } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
+import { toast } from "react-toastify"
 
 const Log = ({ ind, data }) => {
   const dateTime = data.createdAt.split(/[T.]/);
@@ -90,8 +91,10 @@ const Page = () => {
         token,
       });
       console.log(res);
+      toast.success("team Banned")
     } catch (error) {
       console.error("Error fetching data:", error);
+      toast.error("Team Banning Failed")
     }
   };
 
@@ -102,8 +105,10 @@ const Page = () => {
         token,
       });
       console.log(res);
+      toast.success("Team Unbanned Success")
     } catch (error) {
       console.error("Error fetching data:", error);
+      toast.error("Team Unbanning Failed")
     }
   };
 
