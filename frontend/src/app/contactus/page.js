@@ -1,30 +1,80 @@
 "use client";
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-import "react-quill/dist/quill.snow.css";
+import React, { useRef } from "react";
+import emailjs from "@emailjs/browser";
 
 const Page = () => {
-  const [value, setValue] = useState("");
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm("service_zestfzb", "template_y7qqpdi", form.current, {
+        publicKey: "WnwpJ91j8UYn_DOZ5",
+      })
+      .then(
+        () => {
+          console.log("SUCCESS!");
+          form.current.reset();
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+        }
+      );
+  };
+
   return (
-    <div className="md:pt-8 pt-[8rem] w-full md:w-[60%] mx-auto p-8">
-      <div className="w-full h-60 relative">
-        <ReactQuill
-          theme="snow"
-          value={value}
-          onChange={setValue}
-          className="h-[80%]"
-        />
+    <div className="md:pt-8 pt-[8rem] w-full md:w-[100%] max-w-4xl mx-auto p-8 flex items-center justify-center flex-col gap-4">
+      <div className="flex items-center justify-center text-2xl p-2 text-orange-400 font-bold">
+        Complain Forum
       </div>
-      <div className="mt-10">
-        <button
-          type="submit"
-          className="w-full bg-orange-500 hover:bg-orange-600 focus:bg-orange-700 py-4 rounded-xl"
-        >
-          Send Mail
-        </button>
-      </div>
+      <form
+        ref={form}
+        onSubmit={sendEmail}
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col gap-4 w-full md:w-[50%]"
+      >
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            name="name"
+            placeholder="Name"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Email
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="email"
+            name="email"
+            placeholder="Email"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Message
+          </label>
+          <textarea
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            name="message"
+            rows="4"
+            placeholder="Message"
+          ></textarea>
+        </div>
+        <div className="flex items-center justify-center flex-col gap-2 w-full">
+          <input
+            type="submit"
+            value="Send"
+            className="w-full flex items-center justify-center px-3 py-3 bg-orange-500 text-white font-bold rounded hover:bg-orange-600 focus:outline-none focus:shadow-outline"
+          />
+        </div>
+      </form>
     </div>
   );
 };

@@ -13,9 +13,7 @@ import {
   Chip,
   Tooltip,
 } from "@nextui-org/react";
-import useSWR from "swr";
 import { FaBan, FaPlus } from "react-icons/fa";
-import { CiEdit } from "react-icons/ci";
 import { TiTick } from "react-icons/ti";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
