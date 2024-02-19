@@ -123,7 +123,7 @@ const Page = () => {
       </div>
       <div className="mt-8 w-full overflow-x-scroll flex gap-5 py-5 scrollbar">
         {departments && departments.length > 0 ? (
-          departments.map((item) => <Card key={item._id} data={item} />)
+          departments?.map((item) => <Card key={item._id} data={item} />)
         ) : (
           <p>No Department Created</p>
         )}
@@ -159,11 +159,17 @@ const Page = () => {
             <option value="" disabled>
               Select Admin
             </option>
-            {executives.map((item) => (
-              <option key={item._id} value={item._id}>
-                {item.name}
-              </option>
-            ))}
+            {executives && executives.length > 0 ? (
+              executives?.map((item) => (
+                <option key={item._id} value={item._id}>
+                  {item.name}
+                </option>
+                ))
+              ) : (
+                <option value="" disabled>
+                  Loading...
+                </option>
+            )}
           </select>
         </div>
         <div>
