@@ -159,11 +159,17 @@ const Page = () => {
             <option value="" disabled>
               Select Admin
             </option>
-            {executives?.map((item) => (
-              <option key={item._id} value={item._id}>
-                {item.name}
-              </option>
-            ))}
+            {executives && executives.length > 0 ? (
+              executives.map((item) => (
+                <option key={item._id} value={item._id}>
+                  {item.name}
+                </option>
+                ))
+              ) : (
+                <option value="" disabled>
+                  Loading...
+                </option>
+            )}
           </select>
         </div>
         <div>
