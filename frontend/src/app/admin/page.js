@@ -11,7 +11,7 @@ const Page = () => {
     if (typeof window !== "undefined" && window.localStorage) {
       const token = localStorage.getItem("token");
       axios
-        .post(`${baseUrl}/admin/users`, { token })
+        .post(`${baseUrl}/admin/users`, { token:token })
         .then((res) => {
           setDate(res.data);
           console.log(res.data);
