@@ -78,7 +78,7 @@ const Page = () => {
           });
         });
         console.log(response);
-      router.push("/admin/add-team");
+      router.push("/admin/event-listing");
       toast.success("Event Created");
     } catch (error) {
       toast.error("Event Creation Failed")
