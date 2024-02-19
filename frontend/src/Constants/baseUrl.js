@@ -1,3 +1,2 @@
-const baseUrl = "http://localhost:4545";
+const baseUrl = "https://trader-backend-92y7.vercel.app";
 export default baseUrl;
-

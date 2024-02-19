@@ -81,7 +81,7 @@ exports.forgotPassword = async (req, res) => {
       from: process.env.EMAIL,
       to: email,
       subject: "Reset Password",
-      html: `<a href="http://localhost:3000/reset-password/${token}">Click here to reset your password</a>`,
+      html: `<a href="http://localhost:4545/reset-password/${token}">Click here to reset your password</a>`,
     };
     const tok = await ForgotPasswordToken.create({
       token,
@@ -164,7 +164,7 @@ exports.eventLogin = async (req, res) => {
 
 exports.addUser = async (req, res) => {
   try {
-    const {token} = req.body;
+    const { token } = req.body;
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
     if (!user) {
@@ -188,7 +188,7 @@ exports.addUser = async (req, res) => {
         .status(400)
         .json({ message: "Email, password, and name are required" });
     }
-    
+
     const newUser = await User.create({
       email,
       password,

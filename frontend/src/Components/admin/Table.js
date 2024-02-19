@@ -1,14 +1,17 @@
 import React from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import baseUrl from "@/Constants/baseUrl";
 
 const Table = ({ data }) => {
   const router = useRouter();
-  const token = localStorage.getItem("token");
+  if (typeof window !== "undefined" && window.localStorage) {
+    const token = localStorage.getItem("token");
+  }
   const onClck1 = (id, role) => {
     if (role === "executiveAdmin") {
       axios
-        .post(`http://localhost:4545/admin/remove-admin/${id}`,{token})
+        .post(`${baseUrl}/admin/remove-admin/${id}`, { token })
         .then((res) => {
           router.refresh();
           console.log(res.data);
@@ -18,7 +21,7 @@ const Table = ({ data }) => {
         });
     } else {
       axios
-        .post(`http://localhost:4545/admin/make-executive-admin/${id}`,{token})
+        .post(`${baseUrl}/admin/make-executive-admin/${id}`, { token })
         .then((res) => {
           router.refresh();
           console.log(res.data);
@@ -31,7 +34,7 @@ const Table = ({ data }) => {
   const onClck2 = (id, role) => {
     if (role === "juniorAdmin") {
       axios
-        .post(`http://localhost:4545/admin/remove-admin/${id}`, {token})
+        .post(`${baseUrl}/admin/remove-admin/${id}`, { token })
         .then((res) => {
           router.refresh();
           console.log(res.data);
@@ -41,7 +44,7 @@ const Table = ({ data }) => {
         });
     } else {
       axios
-        .post(`http://localhost:4545/admin/make-junior-admin/${id}`, {token})
+        .post(`${baseUrl}/admin/make-junior-admin/${id}`, { token })
         .then((res) => {
           router.refresh();
           console.log(res.data);

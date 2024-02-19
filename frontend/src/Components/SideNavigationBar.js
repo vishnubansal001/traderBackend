@@ -7,6 +7,7 @@ import { GrGroup } from "react-icons/gr";
 import { TbHistory } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useRouter, usePathname } from "next/navigation";
+import { FaPersonBooth } from "react-icons/fa";
 
 const SideNavigationBar = () => {
   const router = useRouter();
@@ -106,7 +107,7 @@ const SideNavigationBar = () => {
             router.push("/addMember");
           }}
         >
-          <TbHistory className="w-4 h-4 lg:w-6 lg:h-6" />
+          <FaPersonBooth className="w-4 h-4 lg:w-6 lg:h-6" />
           <div className="lg:flex hidden w-full items-center">
             <p className="">Add Member</p>
           </div>
