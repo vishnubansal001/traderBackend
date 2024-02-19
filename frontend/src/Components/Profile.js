@@ -107,6 +107,7 @@ const Profile = () => {
                 className="md:w-full w-20 bg-white text-black py-2"
                 onClick={() => {
                   localStorage.removeItem("token");
+                  localStorage.removeItem("user");
                   window.location.href = "/";
                 }}
               >
