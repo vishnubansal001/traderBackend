@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import baseUrl from "@/Constants/baseUrl";
+import { toast } from "react-toastify";
 
 const Table = ({ data }) => {
   const router = useRouter();
@@ -15,9 +16,11 @@ const Table = ({ data }) => {
         .post(`${baseUrl}/admin/remove-admin/${id}`, { token:token })
         .then((res) => {
           router.refresh();
+          toast.success("Executive Role Changed")
           console.log(res.data);
         })
         .catch((err) => {
+          toast.error("Role change Request Failed")
           console.log(err);
         });
     } else {
@@ -25,9 +28,11 @@ const Table = ({ data }) => {
         .post(`${baseUrl}/admin/make-executive-admin/${id}`, { token:token })
         .then((res) => {
           router.refresh();
+          toast.success("Executive Role Changed")
           console.log(res.data);
         })
         .catch((err) => {
+          toast.error("Role change Request Failed")
           console.log(err);
         });
     }
@@ -38,9 +43,11 @@ const Table = ({ data }) => {
         .post(`${baseUrl}/admin/remove-admin/${id}`, { token:token })
         .then((res) => {
           router.refresh();
+          toast.success("Junior Role Changed")
           console.log(res.data);
         })
         .catch((err) => {
+          toast.error("Role change Request Failed")
           console.log(err);
         });
     } else {
@@ -48,9 +55,11 @@ const Table = ({ data }) => {
         .post(`${baseUrl}/admin/make-junior-admin/${id}`, { token:token })
         .then((res) => {
           router.refresh();
+          toast.success("Executive Role Changed")
           console.log(res.data);
         })
         .catch((err) => {
+          toast.error("Role change Request Failed")
           console.log(err);
         });
     }

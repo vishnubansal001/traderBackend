@@ -39,12 +39,12 @@ const Page = () => {
         token,
       })
       .then((res) => {
-        toast.success("request submitted successfully");
+        toast.success("Request submitted successfully");
         router.push(`/history`);
       })
       .catch((err) => {
         console.log(err);
-        toast.error("request unsucessful try again");
+        toast.error("Request unsucessful try again");
         router.push(`/events/${id}/dashboard`);
       });
   }

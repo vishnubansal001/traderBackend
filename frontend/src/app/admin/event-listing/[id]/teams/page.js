@@ -17,6 +17,7 @@ import { FaBan, FaPlus } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const columns = [
   { name: "Sr No.", uid: "_id" },
@@ -50,23 +51,35 @@ const Page = () => {
 
   async function teamBan(teamId) {
     const token = localStorage.getItem("token");
-    const result = await axios.put(
-      `${baseUrl}/event/${id}/team/${teamId}/ban`,
-      {
-        token: token,
-      }
-    );
-    console.log(result);
+    try {
+      const result = await axios.put(
+        `${baseUrl}/event/${id}/team/${teamId}/ban`,
+        {
+          token: token,
+        }
+      );
+
+      console.log(result);
+      toast.success("Team Banned")
+
+    } catch (error) {
+      toast.error("Request Failed")
+    }
   }
   async function teamUnban(teamId) {
     const token = localStorage.getItem("token");
-    const result = await axios.put(
-      `${baseUrl}/event/${id}/team/${teamId}/unban`,
-      {
-        token: token,
-      }
-    );
-    console.log(result);
+    try {
+      const result = await axios.put(
+        `${baseUrl}/event/${id}/team/${teamId}/unban`,
+        {
+          token: token,
+        }
+      );
+      console.log(result);
+      toast.success("Team UnBanned")
+    } catch (error) {
+      toast.error("Request Failed")
+    }
   }
 
   const renderCell = React.useCallback((user, columnKey) => {

@@ -13,7 +13,7 @@ const LayoutProvider = ({ children }) => {
     <NextUIProvider>
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={7000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

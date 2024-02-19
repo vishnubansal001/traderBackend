@@ -54,7 +54,7 @@ const Page = () => {
       });
       console.log(result.data.teams);
       setUsers(result.data.teams.map((item) => item.user));
-      toast.successs("Team Lead Created")
+      toast.success("Team Lead Created")
     } catch (error) {
       console.error(error);
       toast.error("Request Unseccessful");

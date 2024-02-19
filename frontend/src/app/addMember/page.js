@@ -47,7 +47,7 @@ const Page = () => {
       toast.success("Member added successfully");
       window.location.reload();
     } catch (error) {
-      toast.error(error);
+      toast.error("Something went wrong check console!");
       console.log(error);
     }
   };

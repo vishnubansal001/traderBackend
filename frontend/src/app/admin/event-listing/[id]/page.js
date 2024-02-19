@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import baseUrl from "@/Constants/baseUrl";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const Card = ({ data }) => {
   const [departmentHead, setDepartmentHead] = useState();
@@ -112,8 +113,10 @@ const Page = () => {
         formData
       );
       console.log(department);
+      toast.success('Created Department')
     } catch (error) {
       console.log(error);
+      toast.error('Something went wrong!')
     }
   }
   return (

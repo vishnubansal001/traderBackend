@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
 import { useParams, useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const Page = () => {
   const params = useParams();
@@ -61,8 +62,10 @@ const Page = () => {
           });
         });
       console.log(response);
+      toast.success("Transaction done");
     } catch (error) {
       console.log(error);
+      toast.error("Transaction Failed");
     }
   }
 

@@ -43,7 +43,7 @@ const Page = () => {
         }
       })
       .catch((error) => {
-        toast.error(error.message);
+        toast.error("something went wrong! check console");
       });
   }
   return (

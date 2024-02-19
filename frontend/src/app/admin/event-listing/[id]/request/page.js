@@ -84,31 +84,31 @@ const Page = () => {
     allfetching();
   }, []);
 
-  const teamBan = async (d) => {
+  const rejectRequest = async (d) => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(`${baseUrl}/request/${id}/decline/${d}`, {
         token,
       });
       console.log(res);
-      toast.success("team Banned")
+      toast.success("Request Rejected")
     } catch (error) {
       console.error("Error fetching data:", error);
-      toast.error("Team Banning Failed")
+      toast.error("Request rejection Failed")
     }
   };
 
-  const teamUnban = async (d) => {
+  const acceptRequest = async (d) => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(`${baseUrl}/request/${id}/approve/${d}`, {
         token,
       });
       console.log(res);
-      toast.success("Team Unbanned Success")
+      toast.success("Request Accepted")
     } catch (error) {
       console.error("Error fetching data:", error);
-      toast.error("Team Unbanning Failed")
+      toast.error("Request acceptance failed")
     }
   };
 
@@ -152,7 +152,7 @@ const Page = () => {
           <div className="relative flex items-center gap-2">
             <Tooltip color="success" content="Approve Request">
               <span
-                onClick={() => teamUnban(user._id)}
+                onClick={() => acceptRequest(user._id)}
                 className="text-lg text-default-400 bg-green-600 hover:bg-green-700 focus:bg-green-800 py-2 px-4 cursor-pointer active:opacity-50"
               >
                 <TiTick className="bg-transparent text-white" />
@@ -160,7 +160,7 @@ const Page = () => {
             </Tooltip>
             <Tooltip color="danger" content="Decline Request">
               <span
-                onClick={() => teamBan(user._id)}
+                onClick={() => rejectRequest(user._id)}
                 className="text-lg text-danger bg-red-600 hover:bg-red-700 focus:bg-red-800 py-2 px-4  cursor-pointer active:opacity-50"
               >
                 <FaBan className="text-white bg-transparent" />

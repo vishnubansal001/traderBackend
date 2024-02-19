@@ -11,6 +11,7 @@ const Profile = () => {
   const [token, setToken] = useState();
 
   useEffect(() => {
+    if (typeof window !== "undefined" && window.localStorage) {
     const handleStorageChange = () => {
       setToken(localStorage.getItem("token"));
     };
@@ -20,6 +21,7 @@ const Profile = () => {
     return () => {
       window.removeEventListener("storage", handleStorageChange);
     };
+  }
   }, []);
 
   useEffect(() => {

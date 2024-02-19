@@ -24,6 +24,15 @@ const Page = () => {
       console.log(formdata);
       const { data } = await axios.post(`${baseUrl}/auth/login`, formdata);
       localStorage.setItem("token", data.token);
+      axios
+          .post(`${baseUrl}/auth/about`, { token: data.token })
+          .then((res) => {
+            setData(res.data);
+            localStorage.setItem("user", JSON.stringify(res.data.user));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       toast.success("user login successfully");
       window.location.href = "/admin";
     } catch (error) {

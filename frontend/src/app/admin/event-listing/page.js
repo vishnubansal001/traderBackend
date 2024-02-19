@@ -6,6 +6,7 @@ import { MdDelete } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
+import { toast } from "react-toastify";
 
 const Card = ({ data }) => {
   const [hover, setHover] = useState(false);
@@ -14,11 +15,12 @@ const Card = ({ data }) => {
     try {
       const token = localStorage.getItem("token");
       const eventDelete = await axios.delete(`${baseUrl}/event/${id}`, {
-        data: { token },
-      });
+        token: token });
       console.log(eventDelete);
+      toast.success("Deleted Succesfully")
       window.location.reload();
     } catch (error) {
+      toast.error("Failed")
       console.log(error);
     }
   };
