@@ -7,6 +7,15 @@ export default function Layout({ children }) {
     const token = localStorage.getItem("token");
     if (!token) {
       window.location.href = "/login";
+    } else {
+      const user = localStorage.getItem("user");
+      const data = JSON.parse(user);
+      console.log(data["role"]);
+      if(data["role"]==="masterAdmin" || data["role"]==="executiveAdmin" || data["role"]==="juniorAdmin"){
+        console.log("welcome admin");
+      }else{
+        window.location.href = "/login";
+      }
     }
   }
   return (

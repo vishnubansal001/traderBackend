@@ -57,11 +57,15 @@ const Page = () => {
   return (
     <div className="md:pt-8 pt-[8rem] w-full md:w-[60%] mx-auto p-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {departments?.map((department, index) => (
-          <div key={index} className="flex justify-center w-full h-full">
-            <Card key={index} data={department} />
-          </div>
-        ))}
+        {departments && departments.length > 0 ? (
+          departments?.map((department, index) => (
+            <div key={index} className="flex justify-center w-full h-full">
+              <Card key={index} data={department} />
+            </div>
+          ))
+        ) : (
+          <p>No Department Listed</p>
+        )}
       </div>
     </div>
   );

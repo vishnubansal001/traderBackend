@@ -1,22 +1,24 @@
 "use client";
-
 import Table from "@/Components/admin/Table";
 import React from "react";
 import axios from "axios";
+import baseUrl from "@/Constants/baseUrl";
 
 const Page = () => {
   const [data, setDate] = React.useState([]);
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
-    axios
-      .post("http://localhost:4545/admin/users", { token })
-      .then((res) => {
-        setDate(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (typeof window !== "undefined" && window.localStorage) {
+      const token = localStorage.getItem("token");
+      axios
+        .post(`${baseUrl}/admin/users`, { token })
+        .then((res) => {
+          setDate(res.data);
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
   return (
     <div className="w-full p-8 flex flex-col gap-4">
