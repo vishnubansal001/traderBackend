@@ -11,17 +11,20 @@ const Profile = () => {
   const [token, setToken] = useState();
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.localStorage) {
     const handleStorageChange = () => {
       setToken(localStorage.getItem("token"));
     };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }
+  
+    // Set token even if window.localStorage is initially undefined
+    setToken(localStorage.getItem("token"));
+  
+    if (typeof window !== "undefined" && window.localStorage) {
+      window.addEventListener("storage", handleStorageChange);
+  
+      return () => {
+        window.removeEventListener("storage", handleStorageChange);
+      };
+    }
   }, []);
 
   useEffect(() => {
