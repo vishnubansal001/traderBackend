@@ -65,16 +65,16 @@ const Page = () => {
   useEffect(() => {
     async function fetchData() {
       try {
+        const token = localStorage.getItem('token');
         const [executivesResponse] = await Promise.all([
-          axios.get(`${baseUrl}/admin/executives`),
+          axios.post(`${baseUrl}/admin/executives`,{token}),
         ]);
-
         setExecutives(executivesResponse.data.executives);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
-
+  
     if (typeof window !== "undefined") {
       fetchData();
     }
