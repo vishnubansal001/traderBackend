@@ -5,7 +5,7 @@ import Image from "next/image";
 import login from "../../../Assests/login.svg";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 import baseUrl from "@/Constants/baseUrl";
 
 const Page = () => {
@@ -36,6 +36,7 @@ const Page = () => {
         console.log(res);
         if (res.status === 200) {
           toast.success("Login successful");
+          router.refresh();
           localStorage.setItem("token", res.data.token);
           router.push(`/events/${id}/dashboard`);
         } else {

@@ -12,16 +12,16 @@ const Profile = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
-    const handleStorageChange = () => {
-      setToken(localStorage.getItem("token"));
-    };
+      const handleStorageChange = () => {
+        setToken(localStorage.getItem("token"));
+      };
 
-    window.addEventListener("storage", handleStorageChange);
+      window.addEventListener("storage", handleStorageChange);
 
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }
+      return () => {
+        window.removeEventListener("storage", handleStorageChange);
+      };
+    }
   }, []);
 
   useEffect(() => {
@@ -52,7 +52,11 @@ const Profile = () => {
             <p>Trader Profile</p>
           </div>
           <div className="rounded-full w-fit overflow-hidden mx-auto">
-            <Image src={profile} alt="profile" className="md:w-16 md:h-16 h-10 w-10" />
+            <Image
+              src={profile}
+              alt="profile"
+              className="md:w-16 md:h-16 h-10 w-10"
+            />
           </div>
           <div className="text-center">
             <p>{data?.user?.name}</p>
@@ -99,7 +103,7 @@ const Profile = () => {
             </div>
           </div>
           <div>
-            {token && (
+            {token !== "undefined" && (
               <button
                 className="md:w-full w-20 bg-white text-black py-2"
                 onClick={() => {

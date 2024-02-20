@@ -52,7 +52,7 @@ exports.approveRequest = async (req, res) => {
     if (!request) return res.status(400).json({ message: "Request not found" });
 
     if (!user) return res.status(401).json({ message: "Unauthorized" });
-    
+
     if (user.role !== "masterAdmin" || user.role !== "juniorAdmin") {
       if (
         user.role !== "executiveAdmin" &&
@@ -62,7 +62,7 @@ exports.approveRequest = async (req, res) => {
       }
     }
     const teamId = request.team._id;
-   
+
     const team = await Team.findById(teamId);
     if (!team) return res.status(400).json({ message: "Team not found" });
     if (team.banned) return res.status(400).json({ message: "Team is banned" });
@@ -70,17 +70,19 @@ exports.approveRequest = async (req, res) => {
       return res.status(400).json({ message: "Request already resolved" });
     request.status = "approved";
     await request.save();
+
     const transaction = new Transaction({
       transactionId: generateTransactionId(),
       amount: request.amount,
-      team: teamId,
+      team: request.team._id,
       sender: request.department,
       eventId: request.event,
     });
+
     await transaction.save();
-    console.log(team.amount,request.amount)
+
     team.amount -= +request.amount;
-    console.log(team.amount,request.amount)
+
     team.history.push(transaction._id);
     await team.save();
     return res.status(200).json(request);
