@@ -64,7 +64,6 @@ exports.approveRequest = async (req, res) => {
     const teamId = request.team._id;
    
     const team = await Team.findById(teamId);
-    console.log(team);
     if (!team) return res.status(400).json({ message: "Team not found" });
     if (team.banned) return res.status(400).json({ message: "Team is banned" });
     if (request.status !== "pending")
@@ -79,7 +78,9 @@ exports.approveRequest = async (req, res) => {
       eventId: request.event,
     });
     await transaction.save();
+    console.log(team.amount,request.amount)
     team.amount -= +request.amount;
+    console.log(team.amount,request.amount)
     team.history.push(transaction._id);
     await team.save();
     return res.status(200).json(request);
