@@ -65,10 +65,9 @@ const Page = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const [executivesResponse] = await Promise.all([
-          axios.get(`${baseUrl}/admin/executives`),
-        ]);
-
+        const token = localStorage.getItem("token");
+        const executivesResponse = await axios.get(`${baseUrl}/admin/executives`,{token:token})
+        console.log(executivesResponse)
         setExecutives(executivesResponse.data.executives);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -162,7 +161,7 @@ const Page = () => {
             <option value="" disabled>
               Select Admin
             </option>
-            {executives && executives.length > 0 ? (
+            {(executives && executives.length) > 0 ? (
               executives?.map((item) => (
                 <option key={item._id} value={item._id}>
                   {item.name}
