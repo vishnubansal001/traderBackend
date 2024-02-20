@@ -20,7 +20,7 @@ exports.login = async (req, res) => {
     if (user.password !== password) {
       return res.status(400).json({ message: "Invalid password" });
     }
-    if (user.role === "user" || user.role === "executiveAdmin") {
+    if (user.role === "user") {
       return res
         .status(400)
         .json({ message: "You are not authorized to access this route" });
