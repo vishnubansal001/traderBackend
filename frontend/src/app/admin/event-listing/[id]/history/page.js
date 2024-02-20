@@ -16,6 +16,10 @@ const Log = ({ ind, data }) => {
         <p>{data.transactionId}</p>
       </div>
       <div>
+        <p className="text-center">Transaction</p>
+        <p>{data?.sender?.name}</p>
+      </div>
+      <div>
         <p className="text-center">Date & Time</p>
         <div className="flex flex-wrap w-36 justify-between">
           <p>{dateTime[0]}</p>

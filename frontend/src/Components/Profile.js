@@ -8,7 +8,7 @@ import baseUrl from "@/Constants/baseUrl";
 
 const Profile = () => {
   const [data, setData] = useState({});
-  const [token, setToken] = useState();
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
@@ -103,7 +103,7 @@ const Profile = () => {
             </div>
           </div>
           <div>
-            {token !== "undefined" && (
+            {token.length > 0 && (
               <button
                 className="md:w-full w-20 bg-white text-black py-2"
                 onClick={() => {
