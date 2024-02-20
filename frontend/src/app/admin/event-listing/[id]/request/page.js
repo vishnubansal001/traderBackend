@@ -17,7 +17,7 @@ import {
 } from "@nextui-org/react";
 import { FaBan, FaEye } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 
 const Log = ({ ind, data }) => {
   const dateTime = data.createdAt.split(/[T.]/);
@@ -88,13 +88,13 @@ const Page = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(`${baseUrl}/request/${id}/decline/${d}`, {
-        token,
+        token: token,
       });
       console.log(res);
-      toast.success("Request Rejected")
+      toast.success("Request Rejected");
     } catch (error) {
       console.error("Error fetching data:", error);
-      toast.error("Request rejection Failed")
+      toast.error("Request rejection Failed");
     }
   };
 
@@ -102,13 +102,13 @@ const Page = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(`${baseUrl}/request/${id}/approve/${d}`, {
-        token,
+        token
       });
       console.log(res);
-      toast.success("Request Accepted")
+      toast.success("Request Accepted");
     } catch (error) {
       console.error("Error fetching data:", error);
-      toast.error("Request acceptance failed")
+      toast.error("Request acceptance failed");
     }
   };
 

@@ -9,13 +9,19 @@ import { toast } from "react-toastify";
 const Card = ({ data }) => {
   const [departmentHead, setDepartmentHead] = useState();
   useEffect(() => {
-    async function fetchUserName() {
-      const departmentAdmin = await axios.get(
-        `${baseUrl}/admin/users/${data.departmentHead}`
-      );
-      setDepartmentHead(() => departmentAdmin.data.user);
+    if (typeof window !== "undefined" && window.localStorage) {
+      const token = localStorage.getItem("token");
+      async function fetchUserName() {
+        const departmentAdmin = await axios.post(
+          `${baseUrl}/admin/users/${data.departmentHead}`,
+          { token: token }
+        );
+        console.log(departmentAdmin);
+        setDepartmentHead(() => departmentAdmin.data.usr);
+      }
+
+      fetchUserName();
     }
-    fetchUserName();
   }, [data]);
 
   return (
@@ -65,10 +71,19 @@ const Page = () => {
   useEffect(() => {
     async function fetchData() {
       try {
+<<<<<<< HEAD
         const token = localStorage.getItem('token');
         const [executivesResponse] = await Promise.all([
           axios.post(`${baseUrl}/admin/executives`,{token}),
         ]);
+=======
+        const token = localStorage.getItem("token");
+        const executivesResponse = await axios.post(
+          `${baseUrl}/admin/executives`,
+          { token: token }
+        );
+        console.log(executivesResponse);
+>>>>>>> fbecf762caf5837c8b808162343d2344e935a72d
         setExecutives(executivesResponse.data.executives);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -113,10 +128,10 @@ const Page = () => {
         formData
       );
       console.log(department);
-      toast.success('Created Department')
+      toast.success("Created Department");
     } catch (error) {
       console.log(error);
-      toast.error('Something went wrong!')
+      toast.error("Something went wrong!");
     }
   }
   return (
@@ -162,16 +177,16 @@ const Page = () => {
             <option value="" disabled>
               Select Admin
             </option>
-            {executives && executives.length > 0 ? (
+            {(executives && executives.length) > 0 ? (
               executives?.map((item) => (
                 <option key={item._id} value={item._id}>
                   {item.name}
                 </option>
-                ))
-              ) : (
-                <option value="" disabled>
-                  Loading...
-                </option>
+              ))
+            ) : (
+              <option value="" disabled>
+                Loading...
+              </option>
             )}
           </select>
         </div>

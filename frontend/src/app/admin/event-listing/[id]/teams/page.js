@@ -60,10 +60,9 @@ const Page = () => {
       );
 
       console.log(result);
-      toast.success("Team Banned")
-
+      toast.success("Team Banned");
     } catch (error) {
-      toast.error("Request Failed")
+      toast.error("Request Failed");
     }
   }
   async function teamUnban(teamId) {
@@ -76,9 +75,9 @@ const Page = () => {
         }
       );
       console.log(result);
-      toast.success("Team UnBanned")
+      toast.success("Team UnBanned");
     } catch (error) {
-      toast.error("Request Failed")
+      toast.error("Request Failed");
     }
   }
 

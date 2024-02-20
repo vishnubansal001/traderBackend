@@ -8,19 +8,22 @@ import baseUrl from "@/Constants/baseUrl";
 
 const Profile = () => {
   const [data, setData] = useState({});
-  const [token, setToken] = useState();
+  const [token, setToken] = useState(()=>{
+    if(window !== "undefined" && window.localStorage){
+      return localStorage.getItem('token') || "";
+    }else{
+      return "";
+    }
+  });
 
   useEffect(() => {
-    const handleStorageChange = () => {
-      setToken(localStorage.getItem("token"));
-    };
-  
-    // Set token even if window.localStorage is initially undefined
-    setToken(localStorage.getItem("token"));
-  
     if (typeof window !== "undefined" && window.localStorage) {
+      const handleStorageChange = () => {
+        setToken(localStorage.getItem("token"));
+      };
+
       window.addEventListener("storage", handleStorageChange);
-  
+
       return () => {
         window.removeEventListener("storage", handleStorageChange);
       };
@@ -47,6 +50,7 @@ const Profile = () => {
     };
     fetchData();
   }, [token]);
+  console.log(token);
   return (
     <div className="z-10 w-full bg-[#141414] md:w-[20%] md:px-5 p-4 md:py-12 border-b md:border-b-0 md:border-l border-orange-500 fixed top-0 md:right-0 md:h-full">
       <div className="w-full h-full flex flex-row md:flex-col gap-6 items-start justify-start">
@@ -55,7 +59,11 @@ const Profile = () => {
             <p>Trader Profile</p>
           </div>
           <div className="rounded-full w-fit overflow-hidden mx-auto">
-            <Image src={profile} className="md:w-16 md:h-16 h-10 w-10" />
+            <Image
+              src={profile}
+              alt="profile"
+              className="md:w-16 md:h-16 h-10 w-10"
+            />
           </div>
           <div className="text-center">
             <p>{data?.user?.name}</p>
@@ -102,7 +110,7 @@ const Profile = () => {
             </div>
           </div>
           <div>
-            {token && (
+            {token && token.length > 0 ? (
               <button
                 className="md:w-full w-20 bg-white text-black py-2"
                 onClick={() => {
@@ -113,6 +121,8 @@ const Profile = () => {
               >
                 Log Out
               </button>
+            ) : (
+              ""
             )}
           </div>
         </div>
