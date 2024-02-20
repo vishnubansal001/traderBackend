@@ -61,9 +61,8 @@ exports.approveRequest = async (req, res) => {
         return res.status(401).json({ message: "Unauthorized" });
       }
     }
-    const teamId = request.team._id;
-
-    const team = await Team.findById(teamId);
+  
+    const team = await Team.findById(request.team._id);
     if (!team) return res.status(400).json({ message: "Team not found" });
     if (team.banned) return res.status(400).json({ message: "Team is banned" });
     if (request.status !== "pending")
