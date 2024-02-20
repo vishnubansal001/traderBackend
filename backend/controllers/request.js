@@ -62,7 +62,9 @@ exports.approveRequest = async (req, res) => {
       }
     }
     const teamId = request.team._id;
+   
     const team = await Team.findById(teamId);
+    console.log(team);
     if (!team) return res.status(400).json({ message: "Team not found" });
     if (team.banned) return res.status(400).json({ message: "Team is banned" });
     if (request.status !== "pending")
