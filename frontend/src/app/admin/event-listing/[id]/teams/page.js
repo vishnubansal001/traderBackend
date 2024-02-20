@@ -127,7 +127,7 @@ const Page = () => {
             <Tooltip color="danger" content="Add Transaction">
               <span
                 onClick={() =>
-                  router.push(`/admin/event-listing/${id}/${user._id}`)
+                  router.push(`/admin/event-listing/${id}/teams/${user._id}`)
                 }
                 className="text-lg text-danger bg-orange-600 hover:bg-orange-700 focus:bg-orange-800 py-2 px-4  cursor-pointer active:opacity-50"
               >
