@@ -43,21 +43,25 @@ exports.createRequest = async (req, res) => {
 exports.approveRequest = async (req, res) => {
   try {
     const { token } = req.body;
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
     const requestId = req.params.requestId;
+
     const request = await Request.findById(requestId).populate("department");
     if (!request) return res.status(400).json({ message: "Request not found" });
+
     if (!user) return res.status(401).json({ message: "Unauthorized" });
-    if (
-      user.role !== "masterAdmin" ||
-      user.role !== "juniorAdmin" ||
-      (user.role !== "executiveAdmin" &&
-        user.departmentId === request.department)
-    ) {
-      return res.status(401).json({ message: "Unauthorized" });
+    console.log(user.role !== "masterAdmin" || user.role !== "juniorAdmin");
+    if (user.role !== "masterAdmin" || user.role !== "juniorAdmin") {
+      if (
+        user.role !== "executiveAdmin" &&
+        user.departmentId === request.department._id
+      ) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
     }
-    const teamId = request.team;
+    const teamId = request.team._id;
     const team = await Team.findById(teamId);
     if (!team) return res.status(400).json({ message: "Team not found" });
     if (team.banned) return res.status(400).json({ message: "Team is banned" });
@@ -73,7 +77,7 @@ exports.approveRequest = async (req, res) => {
       eventId: request.event,
     });
     await transaction.save();
-    team.amount -= request.amount;
+    team.amount -= +request.amount;
     team.history.push(transaction._id);
     await team.save();
     return res.status(200).json(request);
@@ -87,19 +91,20 @@ exports.declineRequest = async (req, res) => {
     const { token } = req.body;
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
-    if (!user) return res.status(401).json({ message: "Unauthorized" });
-    if (
-      user.role !== "masterAdmin" ||
-      user.role !== "juniorAdmin" ||
-      (user.role !== "executiveAdmin" &&
-        user.departmentId === request.department)
-    ) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
     const requestId = req.params.requestId;
     const request = await Request.findById(requestId).populate("department");
     if (!request) return res.status(400).json({ message: "Request not found" });
-    const teamId = request.team;
+    if (!user) return res.status(401).json({ message: "Unauthorized" });
+    if (user.role !== "masterAdmin" || user.role !== "juniorAdmin") {
+      if (
+        user.role !== "executiveAdmin" &&
+        user.departmentId === request.department._id
+      ) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+    }
+
+    const teamId = request.team._id;
     const team = await Team.findById(teamId);
     if (!team) return res.status(400).json({ message: "Team not found" });
     if (team.banned) return res.status(400).json({ message: "Team is banned" });

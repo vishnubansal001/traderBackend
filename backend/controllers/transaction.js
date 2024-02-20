@@ -29,7 +29,7 @@ exports.createTransaction = async (req, res) => {
         .status(400)
         .json({ message: "This team does not belong to this event" });
     }
-    team.amount += amount;
+    team.amount += +amount;
     await team.save();
     let sender;
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
