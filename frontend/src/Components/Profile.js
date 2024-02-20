@@ -52,7 +52,7 @@ const Profile = () => {
             <p>Trader Profile</p>
           </div>
           <div className="rounded-full w-fit overflow-hidden mx-auto">
-            <Image src={profile} className="md:w-16 md:h-16 h-10 w-10" />
+            <Image src={profile} alt="profile" className="md:w-16 md:h-16 h-10 w-10" />
           </div>
           <div className="text-center">
             <p>{data?.user?.name}</p>

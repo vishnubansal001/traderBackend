@@ -27,7 +27,6 @@ const Page = () => {
       axios
           .post(`${baseUrl}/auth/about`, { token: data.token })
           .then((res) => {
-            setData(res.data);
             localStorage.setItem("user", JSON.stringify(res.data.user));
           })
           .catch((err) => {
