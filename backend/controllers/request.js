@@ -52,7 +52,7 @@ exports.approveRequest = async (req, res) => {
     if (!request) return res.status(400).json({ message: "Request not found" });
 
     if (!user) return res.status(401).json({ message: "Unauthorized" });
-    console.log(user.role !== "masterAdmin" || user.role !== "juniorAdmin");
+    
     if (user.role !== "masterAdmin" || user.role !== "juniorAdmin") {
       if (
         user.role !== "executiveAdmin" &&

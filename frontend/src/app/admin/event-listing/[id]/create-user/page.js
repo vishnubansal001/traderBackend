@@ -74,13 +74,13 @@ const Page = () => {
       case "password":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
+            <p className="text-bold text-sm">{cellValue}</p>
           </div>
         );
       case "email":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
+            <p className="text-bold text-sm">{cellValue}</p>
           </div>
         );
       case "actions":

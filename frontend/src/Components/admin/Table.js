@@ -55,7 +55,7 @@ const Table = ({ data }) => {
         .post(`${baseUrl}/admin/make-junior-admin/${id}`, { token:token })
         .then((res) => {
           router.refresh();
-          toast.success("Executive Role Changed")
+          toast.success("Junior Role Changed")
           console.log(res.data);
         })
         .catch((err) => {
