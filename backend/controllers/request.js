@@ -73,7 +73,7 @@ exports.approveRequest = async (req, res) => {
     const transaction = new Transaction({
       transactionId: generateTransactionId(),
       amount: request.amount,
-      team: request.team._id,
+      teamId: request.team._id,
       sender: request.department,
       eventId: request.event,
     });
