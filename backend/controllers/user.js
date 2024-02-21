@@ -194,6 +194,7 @@ exports.addUser = async (req, res) => {
       password,
       name,
       eventId: user.eventId,
+      teamId: user.teamId,
       isTeamLead: false,
     });
     await newUser.save();

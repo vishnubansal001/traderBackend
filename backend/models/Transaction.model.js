@@ -6,7 +6,7 @@ const transactionSchema = new mongoose.Schema({
     required: true,
   },
   sender: {
-    type: mongoose.Schema.Types.Mixed,
+    type: String,
     required: true,
   },
   teamId: {

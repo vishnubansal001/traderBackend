@@ -17,7 +17,7 @@ const Log = ({ ind, data }) => {
       </div>
       <div>
         <p className="text-center">Transaction</p>
-        <p>{data?.sender?.name}</p>
+        <p>{data?.sender}</p>
       </div>
       <div>
         <p className="text-center">Date & Time</p>

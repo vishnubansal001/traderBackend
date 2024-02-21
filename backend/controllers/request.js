@@ -74,7 +74,7 @@ exports.approveRequest = async (req, res) => {
       transactionId: generateTransactionId(),
       amount: request.amount,
       teamId: request.team._id,
-      sender: request.department,
+      sender: user.name,
       eventId: request.event,
     });
 

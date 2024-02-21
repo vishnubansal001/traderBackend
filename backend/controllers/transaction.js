@@ -35,7 +35,7 @@ exports.createTransaction = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
     if (user.role === "masterAdmin" || user.role === "juniorAdmin") {
-      sender = user.role;
+      sender = user.name;
     } else {
       const department = await Department.findById(user.departmentId);
       if (!department) {
