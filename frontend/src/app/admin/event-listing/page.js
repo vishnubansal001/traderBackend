@@ -115,10 +115,11 @@ const Card = ({ data }) => {
 
 const page = () => {
   const [events, setEvents] = useState([]);
+  const router = useRouter();
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      window.location.href = "/login";
+      router.push("/login");
     }
     async function fetchEvents() {
       const events = await axios.get(`${baseUrl}/event`);

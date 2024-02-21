@@ -36,7 +36,7 @@ const Page = () => {
         console.log(res);
         if (res.status === 200) {
           toast.success("Login successful");
-          router.refresh();
+          window.location.reload();
           localStorage.setItem("token", res.data.token);
           router.push(`/events/${id}/dashboard`);
         } else {

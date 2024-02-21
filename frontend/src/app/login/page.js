@@ -6,8 +6,10 @@ import login from "../../Assests/login.svg";
 import baseUrl from "@/Constants/baseUrl";
 import axios from "axios";
 import { toast } from "react-toastify"
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
   const [formdata, setFormdata] = useState({
     email: "",
     password: "",
@@ -24,16 +26,14 @@ const Page = () => {
       console.log(formdata);
       const { data } = await axios.post(`${baseUrl}/auth/login`, formdata);
       localStorage.setItem("token", data.token);
-      axios
-          .post(`${baseUrl}/auth/about`, { token: data.token })
-          .then((res) => {
+      await axios.post(`${baseUrl}/auth/about`, { token: data.token }).then((res) => {
             localStorage.setItem("user", JSON.stringify(res.data.user));
-          })
-          .catch((err) => {
+          }).catch((err) => {
             console.log(err);
           });
       toast.success("user login successfully");
-      window.location.href = "/admin";
+      window.location.reload();
+      router.push("/admin");
     } catch (error) {
       console.log(error);
       toast.error("something went wrong");

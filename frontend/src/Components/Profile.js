@@ -5,30 +5,13 @@ import Image from "next/image";
 import profile from "../Assests/Kim Seon Ho - Link 1.png";
 import axios from "axios";
 import baseUrl from "@/Constants/baseUrl";
+import { useRouter } from "next/navigation";
 
 const Profile = () => {
   const [data, setData] = useState({});
-  const [token, setToken] = useState(()=>{
-    if(window !== "undefined" && window.localStorage){
-      return localStorage.getItem('token') || "";
-    }else{
-      return "";
-    }
-  });
-
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.localStorage) {
-      const handleStorageChange = () => {
-        setToken(localStorage.getItem("token"));
-      };
-
-      window.addEventListener("storage", handleStorageChange);
-
-      return () => {
-        window.removeEventListener("storage", handleStorageChange);
-      };
-    }
-  }, []);
+  const [token, setToken] = useState(null);
+  const router = useRouter();
+  
 
   useEffect(() => {
     const fetchData = () => {
@@ -41,6 +24,7 @@ const Profile = () => {
           .post(`${baseUrl}/auth/about`, { token })
           .then((res) => {
             setData(res.data);
+            setToken(localStorage.getItem("token"));
             localStorage.setItem("user", JSON.stringify(res.data.user));
           })
           .catch((err) => {
@@ -110,20 +94,18 @@ const Profile = () => {
             </div>
           </div>
           <div>
-            {token && token.length > 0 ? (
+            {token && (
               <button
                 className="md:w-full w-20 bg-white text-black py-2"
                 onClick={() => {
                   localStorage.removeItem("token");
                   localStorage.removeItem("user");
-                  window.location.href = "/";
+                  router.push("/");
                 }}
               >
                 Log Out
               </button>
-            ) : (
-              ""
-            )}
+            ) }
           </div>
         </div>
       </div>
