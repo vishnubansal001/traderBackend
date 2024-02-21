@@ -71,19 +71,12 @@ const Page = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-<<<<<<< HEAD
-        const token = localStorage.getItem('token');
-        const [executivesResponse] = await Promise.all([
-          axios.post(`${baseUrl}/admin/executives`,{token}),
-        ]);
-=======
         const token = localStorage.getItem("token");
         const executivesResponse = await axios.post(
           `${baseUrl}/admin/executives`,
           { token: token }
         );
         console.log(executivesResponse);
->>>>>>> fbecf762caf5837c8b808162343d2344e935a72d
         setExecutives(executivesResponse.data.executives);
       } catch (error) {
         console.error("Error fetching data:", error);
